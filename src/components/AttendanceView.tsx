@@ -149,7 +149,7 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
         <CardHeader>
           <CardTitle>Calendar</CardTitle>
         </CardHeader>
-        <CardContent className="flex justify-center">
+        <CardContent className="flex justify-center overflow-hidden">
           <div className="w-full max-w-4xl">
             <Calendar
               mode="single"
@@ -157,22 +157,22 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
               onSelect={(date) => date && setSelectedDate(date)}
               modifiers={modifiers}
               modifiersStyles={modifiersStyles}
-              className="rounded-md border w-full scale-150 origin-top mx-auto"
+              className="rounded-md border w-full mx-auto"
               classNames={{
-                months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 w-full",
                 month: "space-y-4 w-full",
                 caption: "flex justify-center pt-1 relative items-center mb-6",
                 caption_label: "text-2xl font-semibold",
                 nav: "space-x-1 flex items-center",
-                nav_button: "h-10 w-10 bg-transparent p-0 opacity-50 hover:opacity-100",
+                nav_button: "h-12 w-12 bg-transparent p-0 opacity-50 hover:opacity-100",
                 nav_button_previous: "absolute left-1",
                 nav_button_next: "absolute right-1",
-                table: "w-full border-collapse space-y-1",
-                head_row: "flex",
-                head_cell: "text-muted-foreground rounded-md w-16 font-semibold text-lg",
+                table: "w-full border-collapse",
+                head_row: "flex w-full",
+                head_cell: "text-muted-foreground rounded-md flex-1 font-semibold text-lg",
                 row: "flex w-full mt-3",
-                cell: "relative p-0 text-center text-lg focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent",
-                day: "h-16 w-16 p-0 font-semibold aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                cell: "relative p-0 text-center text-lg focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent flex-1",
+                day: "h-16 w-full p-0 font-semibold aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
                 day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
                 day_today: "bg-accent text-accent-foreground",
                 day_outside: "text-muted-foreground opacity-50",
