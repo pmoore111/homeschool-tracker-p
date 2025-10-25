@@ -34,17 +34,23 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
     present: {
       backgroundColor: 'oklch(0.55 0.18 150)',
       color: 'white',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      borderColor: 'oklch(0.45 0.18 150)',
+      borderWidth: '2px'
     },
     absent: {
       backgroundColor: 'oklch(0.55 0.22 25)',
       color: 'white',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      borderColor: 'oklch(0.45 0.22 25)',
+      borderWidth: '2px'
     },
     excused: {
       backgroundColor: 'oklch(0.70 0.15 75)',
       color: 'white',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      borderColor: 'oklch(0.60 0.15 75)',
+      borderWidth: '2px'
     }
   }
 
@@ -147,37 +153,52 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
 
       <Card>
         <CardHeader>
-          <CardTitle>Calendar</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Calendar</CardTitle>
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded border-2" style={{ backgroundColor: 'oklch(0.55 0.18 150)', borderColor: 'oklch(0.45 0.18 150)' }} />
+                <span className="text-muted-foreground">Present</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded border-2" style={{ backgroundColor: 'oklch(0.55 0.22 25)', borderColor: 'oklch(0.45 0.22 25)' }} />
+                <span className="text-muted-foreground">Absent</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded border-2" style={{ backgroundColor: 'oklch(0.70 0.15 75)', borderColor: 'oklch(0.60 0.15 75)' }} />
+                <span className="text-muted-foreground">Excused</span>
+              </div>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent className="flex justify-center overflow-hidden">
-          <div className="w-full max-w-4xl">
+        <CardContent className="overflow-x-auto">
+          <div className="w-full min-w-[600px] max-w-4xl mx-auto">
             <Calendar
               mode="single"
               selected={selectedDate}
               onSelect={(date) => date && setSelectedDate(date)}
               modifiers={modifiers}
               modifiersStyles={modifiersStyles}
-              className="rounded-md border w-full mx-auto"
+              className="w-full p-0"
               classNames={{
-                months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 w-full",
-                month: "space-y-4 w-full",
-                caption: "flex justify-center pt-1 relative items-center mb-6",
+                months: "w-full",
+                month: "w-full space-y-6",
+                caption: "flex justify-center relative items-center mb-6",
                 caption_label: "text-2xl font-semibold",
-                nav: "space-x-1 flex items-center",
-                nav_button: "h-12 w-12 bg-transparent p-0 opacity-50 hover:opacity-100",
-                nav_button_previous: "absolute left-1",
-                nav_button_next: "absolute right-1",
+                nav: "flex items-center gap-2",
+                nav_button: "h-10 w-10 bg-transparent p-0 hover:bg-accent rounded-md transition-colors opacity-60 hover:opacity-100",
+                nav_button_previous: "absolute left-0",
+                nav_button_next: "absolute right-0",
                 table: "w-full border-collapse",
-                head_row: "flex w-full",
-                head_cell: "text-muted-foreground rounded-md flex-1 font-semibold text-lg",
-                row: "flex w-full mt-3",
-                cell: "relative p-0 text-center text-lg focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent flex-1",
-                day: "h-16 w-full p-0 font-semibold aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
-                day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                day_today: "bg-accent text-accent-foreground",
-                day_outside: "text-muted-foreground opacity-50",
-                day_disabled: "text-muted-foreground opacity-50",
-                day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                head_row: "grid grid-cols-7 gap-2 mb-2",
+                head_cell: "text-muted-foreground font-semibold text-base h-10 flex items-center justify-center uppercase text-xs tracking-wider",
+                row: "grid grid-cols-7 gap-2 mb-2",
+                cell: "relative p-0 text-center",
+                day: "h-16 w-full p-2 font-medium text-base flex items-center justify-center hover:bg-accent/50 hover:text-accent-foreground rounded-lg transition-all border-2 border-border bg-card cursor-pointer",
+                day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary ring-2 ring-primary ring-offset-2",
+                day_today: "border-primary border-2 font-bold",
+                day_outside: "text-muted-foreground/30 bg-muted/20",
+                day_disabled: "text-muted-foreground opacity-30 cursor-not-allowed",
                 day_hidden: "invisible",
               }}
             />
