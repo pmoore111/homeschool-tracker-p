@@ -20,25 +20,25 @@ The app manages multiple interconnected features (subjects, grades, attendance, 
 - **Success criteria**: Grades persist, calculate averages correctly, display chronologically
 
 ### Attendance Calendar
-- **Functionality**: Monthly calendar view to mark present/absent/excused days
-- **Purpose**: Maintain required attendance records for homeschool compliance
+- **Functionality**: Large monthly calendar view to mark present/absent/excused days with enhanced visibility
+- **Purpose**: Maintain required attendance records for homeschool compliance with easy-to-read calendar display
 - **Trigger**: User navigates to Attendance tab
-- **Progression**: Dashboard → Attendance tab → Calendar view → Click date → Select status → Auto-save
-- **Success criteria**: Attendance saves per date, displays visual indicators, calculates attendance percentage
+- **Progression**: Dashboard → Attendance tab → Large calendar view → Click date → Select status → Auto-save
+- **Success criteria**: Attendance saves per date, displays visual indicators with color coding, calculates attendance percentage, calendar is sized appropriately for easy viewing and interaction
 
 ### Progress Reports
-- **Functionality**: Generate comprehensive progress reports showing grades and attendance
-- **Purpose**: Create official documentation for records and compliance
-- **Trigger**: User clicks "Generate Progress Report" button
-- **Progression**: Dashboard → Reports tab → Select date range → Generate → View formatted report → Print/export
-- **Success criteria**: Report displays all subjects, current grades, attendance summary, formatted professionally
+- **Functionality**: Generate comprehensive progress reports showing grades and attendance, with PDF export capability
+- **Purpose**: Create official documentation for records and compliance in both digital and print formats
+- **Trigger**: User clicks PDF download buttons or print button
+- **Progression**: Dashboard → Reports tab → Click "Progress Report PDF" or "Report Card PDF" or "Complete Report PDF" → PDF generates and downloads → User can print or save
+- **Success criteria**: Report displays all subjects, current grades, attendance summary with present/absent/excused breakdown, formatted professionally, exports to PDF with proper formatting
 
 ### Report Cards
-- **Functionality**: Generate formal report cards with letter grades and comments
-- **Purpose**: Create end-of-term official grade documentation
-- **Trigger**: User clicks "Generate Report Card" button
-- **Progression**: Dashboard → Reports tab → Select term → Generate → View formatted report card → Print/export
-- **Success criteria**: Shows letter grades, GPA, attendance, formatted as official document
+- **Functionality**: Generate formal report cards with letter grades, GPA, and attendance data as downloadable PDFs
+- **Purpose**: Create end-of-term official grade documentation that can be saved and shared
+- **Trigger**: User clicks "Report Card PDF" button
+- **Progression**: Dashboard → Reports tab → Click "Report Card PDF" → PDF generates and downloads → User saves to device
+- **Success criteria**: Shows letter grades, GPA, attendance rate with detailed breakdown, formatted as official document, downloads as properly formatted PDF file
 
 ## Edge Case Handling
 - **No grades entered**: Display helpful empty state encouraging first entry
@@ -46,6 +46,9 @@ The app manages multiple interconnected features (subjects, grades, attendance, 
 - **Future dates in calendar**: Allow marking but show visual distinction from past dates
 - **Missing attendance data**: Show gaps clearly in reports with "Not Recorded" status
 - **Print formatting**: Ensure reports render properly for printing with page breaks
+- **PDF generation errors**: Show user-friendly toast notifications on success or failure
+- **Empty attendance records**: Handle PDF generation gracefully when no attendance data exists
+- **Large calendar display**: Ensure calendar scales appropriately and remains readable on different screen sizes
 
 ## Design Direction
 The design should feel professional, trustworthy, and educational - similar to official school portals but warmer and more personal. Clean interface with academic color palette that conveys organization and competence. Minimal but purposeful design that prioritizes clarity and usability.
@@ -114,6 +117,8 @@ Subtle, purposeful animations that reinforce interactions without distracting fr
   - FileText (reports)
   - Plus (add entries)
   - Printer (print reports)
+  - FilePdf (PDF generation)
+  - FileArrowDown (download complete report)
   
 - **Spacing**: 
   - Page padding: p-6 (24px)
@@ -125,6 +130,8 @@ Subtle, purposeful animations that reinforce interactions without distracting fr
 - **Mobile**: 
   - Tabs convert to vertical stacked navigation at <768px
   - Subject cards stack to single column on mobile
-  - Calendar adapts to full-width with larger touch targets
+  - Calendar adapts to full-width with larger touch targets and appropriate scaling
+  - Calendar maintains readability at all screen sizes with responsive text sizing
   - Reports optimize for mobile viewing with responsive tables
+  - PDF download buttons stack vertically on mobile for better touch accessibility
   - Bottom margin on mobile to prevent content hiding behind browser chrome

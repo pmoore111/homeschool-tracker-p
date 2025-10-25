@@ -2,10 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Separator } from '@/components/ui/separator'
-import { FileText, Printer } from '@phosphor-icons/react'
+import { FileText, Printer, FilePdf, FileArrowDown } from '@phosphor-icons/react'
 import { Assignment, AttendanceRecord, StudentInfo } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { calculateSubjectAverage, getLetterGrade, calculateGPA, calculateAttendanceRate, formatDate } from '@/lib/helpers'
+import { generateProgressReportPDF, generateReportCardPDF, generateCombinedReportPDF } from '@/lib/pdfGenerator'
+import { toast } from 'sonner'
 
 interface ReportsViewProps {
   assignments: Assignment[]
@@ -36,6 +38,33 @@ export function ReportsView({ assignments, attendance, studentInfo }: ReportsVie
     window.print()
   }
 
+  const handleDownloadProgressReport = () => {
+    try {
+      generateProgressReportPDF(assignments, attendance, studentInfo)
+      toast.success('Progress Report PDF downloaded successfully!')
+    } catch (error) {
+      toast.error('Failed to generate PDF. Please try again.')
+    }
+  }
+
+  const handleDownloadReportCard = () => {
+    try {
+      generateReportCardPDF(assignments, attendance, studentInfo)
+      toast.success('Report Card PDF downloaded successfully!')
+    } catch (error) {
+      toast.error('Failed to generate PDF. Please try again.')
+    }
+  }
+
+  const handleDownloadCombined = () => {
+    try {
+      generateCombinedReportPDF(assignments, attendance, studentInfo)
+      toast.success('Complete Report PDF downloaded successfully!')
+    } catch (error) {
+      toast.error('Failed to generate PDF. Please try again.')
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between no-print">
@@ -46,10 +75,24 @@ export function ReportsView({ assignments, attendance, studentInfo }: ReportsVie
             <p className="text-muted-foreground">Generate and print academic reports</p>
           </div>
         </div>
-        <Button onClick={handlePrint}>
-          <Printer className="mr-2" />
-          Print Report
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleDownloadProgressReport} variant="outline">
+            <FilePdf className="mr-2" />
+            Progress Report PDF
+          </Button>
+          <Button onClick={handleDownloadReportCard} variant="outline">
+            <FilePdf className="mr-2" />
+            Report Card PDF
+          </Button>
+          <Button onClick={handleDownloadCombined} variant="outline">
+            <FileArrowDown className="mr-2" />
+            Complete Report PDF
+          </Button>
+          <Button onClick={handlePrint}>
+            <Printer className="mr-2" />
+            Print
+          </Button>
+        </div>
       </div>
 
       <div className="print-section">
