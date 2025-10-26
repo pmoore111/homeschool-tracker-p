@@ -18,6 +18,7 @@ interface CalendarDay {
   isToday: boolean
   isEmpty: boolean
   attendanceStatus: 'present' | 'absent' | 'excused' | null
+  isSchoolDay: boolean
 }
 
 export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceViewProps) {
@@ -43,6 +44,11 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
     }
   }
 
+  const isSchoolDay = (date: Date): boolean => {
+    const dayOfWeek = date.getDay()
+    return dayOfWeek >= 1 && dayOfWeek <= 4
+  }
+
   const getCalendarDays = (): CalendarDay[] => {
     const year = currentDate.getFullYear()
     const month = currentDate.getMonth()
@@ -62,7 +68,8 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
         isCurrentMonth: false,
         isToday: false,
         isEmpty: true,
-        attendanceStatus: null
+        attendanceStatus: null,
+        isSchoolDay: false
       })
     }
     
@@ -80,7 +87,8 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
         isCurrentMonth: true,
         isToday,
         isEmpty: false,
-        attendanceStatus: attendanceMap.get(dateKey) || null
+        attendanceStatus: attendanceMap.get(dateKey) || null,
+        isSchoolDay: isSchoolDay(date)
       })
     }
     
@@ -93,7 +101,8 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
         isCurrentMonth: false,
         isToday: false,
         isEmpty: true,
-        attendanceStatus: null
+        attendanceStatus: null,
+        isSchoolDay: false
       })
     }
     
@@ -112,7 +121,7 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
   }
 
   const handleDayClick = (day: CalendarDay) => {
-    if (!day.isEmpty) {
+    if (!day.isEmpty && day.isSchoolDay) {
       setSelectedDay(day)
       setShowDialog(true)
     }
@@ -187,7 +196,9 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
               onClick={() => handleDayClick(day)}
               className={`
                 min-h-[100px] border rounded-md p-2 transition-all
-                ${day.isEmpty ? 'bg-muted/20 cursor-default' : 'hover:shadow-md hover:-translate-y-0.5 cursor-pointer'}
+                ${day.isEmpty ? 'bg-muted/20 cursor-default' : ''}
+                ${!day.isEmpty && !day.isSchoolDay ? 'bg-muted/40 cursor-default' : ''}
+                ${!day.isEmpty && day.isSchoolDay ? 'hover:shadow-md hover:-translate-y-0.5 cursor-pointer' : ''}
                 ${day.isToday ? 'ring-2 ring-primary' : ''}
                 ${!day.isCurrentMonth && !day.isEmpty ? 'opacity-40' : ''}
               `}
@@ -198,12 +209,20 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
                     <span className={`text-sm font-medium ${day.isToday ? 'text-primary font-bold' : ''}`}>
                       {day.dayNumber}
                     </span>
-                    {day.attendanceStatus && (
+                    {day.attendanceStatus && day.isSchoolDay && (
                       <Badge 
                         variant="secondary"
                         className={`text-xs px-1.5 py-0 ${getStatusColor(day.attendanceStatus)}`}
                       >
                         {day.attendanceStatus.charAt(0).toUpperCase()}
+                      </Badge>
+                    )}
+                    {!day.isSchoolDay && (
+                      <Badge 
+                        variant="secondary"
+                        className="text-xs px-1.5 py-0 bg-muted text-muted-foreground"
+                      >
+                        Off
                       </Badge>
                     )}
                   </div>
