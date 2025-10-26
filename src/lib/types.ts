@@ -891,7 +891,154 @@ export const MATH_CURRICULUM: Curriculum = {
     },
     {
       unit: "Circles and Composite Figures",
-      lessons: []
+      lessons: [
+        {
+          title: "Parts of a Circle",
+          activities: [
+            { type: "Video", title: "Radius, Diameter, Circumference & π", grade: "" },
+            { type: "Exercise", title: "Radius and Diameter", grade: "" }
+          ]
+        },
+        {
+          title: "Circumference and Pi",
+          activities: [
+            { type: "Article", title: "Diameter and Circumference Patterns", grade: "" },
+            { type: "Video", title: "Relating Diameter and Circumference", grade: "" },
+            { type: "Video", title: "Radius & Diameter from Circumference", grade: "" },
+            { type: "Exercise", title: "Relate Diameter and Circumference", grade: "" },
+            { type: "Exercise", title: "Circumference of a Circle", grade: "" }
+          ]
+        },
+        {
+          title: "Area of a Circle",
+          activities: [
+            { type: "Article", title: "Area of a Circle (Article)", grade: "" },
+            { type: "Video", title: "Area of a Circle Intuition", grade: "" },
+            { type: "Video", title: "Relating Circumference and Area", grade: "" },
+            { type: "Video", title: "Area of a Circle", grade: "" },
+            { type: "Exercise", title: "Area of a Circle", grade: "" }
+          ]
+        },
+        {
+          title: "Fractions of a Circle",
+          activities: [
+            { type: "Video", title: "Partial Circle Area and Arc Length", grade: "" },
+            { type: "Exercise", title: "Circumference of Parts of Circles", grade: "" },
+            { type: "Exercise", title: "Area of Parts of Circles", grade: "" }
+          ]
+        },
+        {
+          title: "Area and Circumference Challenge Problems",
+          activities: [
+            { type: "Video", title: "Finding Circumference when Given Area", grade: "" },
+            { type: "Video", title: "Impact of Increasing the Radius", grade: "" },
+            { type: "Exercise", title: "Area and Circumference Challenge", grade: "" }
+          ]
+        },
+        {
+          title: "Area of Composite Polygons",
+          activities: [
+            { type: "Video", title: "Finding Area by Rearranging Parts", grade: "" },
+            { type: "Video", title: "Area of Composite Shapes", grade: "" },
+            { type: "Video", title: "Area of Quadrilateral with 2 Parallel Sides", grade: "" },
+            { type: "Exercise", title: "Area of Composite Shapes", grade: "" }
+          ]
+        },
+        {
+          title: "Area of Composite Figures",
+          activities: [
+            { type: "Video", title: "Area of a Shaded Region", grade: "" },
+            { type: "Exercise", title: "Shaded Areas", grade: "" },
+            { type: "Video", title: "Area of Composite Figure with Circles", grade: "" },
+            { type: "Video", title: "Area of Composite Figure with Parallelograms", grade: "" },
+            { type: "Exercise", title: "Find Area of Composite Figures", grade: "" }
+          ]
+        },
+        {
+          title: "Converting Measurements",
+          activities: [
+            { type: "Video", title: "Converting Between Measurement Systems", grade: "" },
+            { type: "Exercise", title: "Convert Between Measurement Systems", grade: "" }
+          ]
+        },
+        {
+          title: "Circles and Composite Figures: Assessments",
+          activities: [
+            { type: "Quiz", title: "Quiz 1 – Parts, Circumference, and Area", grade: "" },
+            { type: "Quiz", title: "Quiz 2 – Fractions and Challenges", grade: "" },
+            { type: "Quiz", title: "Quiz 3 – Composite and Conversions", grade: "" },
+            { type: "Test", title: "Unit Test – Circles and Composite Figures", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Volume and Surface Area",
+      lessons: [
+        {
+          title: "Surface Area and Nets",
+          activities: [
+            { type: "Video", title: "Intro to Nets of Polyhedra", grade: "" },
+            { type: "Exercise", title: "Nets of Polyhedra", grade: "" },
+            { type: "Video", title: "Surface Area of a Box Using Nets", grade: "" },
+            { type: "Video", title: "Surface Area Using a Net (Triangular Prism)", grade: "" },
+            { type: "Video", title: "Total and Lateral Surface Area Using a Net (Rectangular Pyramid)", grade: "" },
+            { type: "Exercise", title: "Surface Area Expressions with Nets", grade: "" }
+          ]
+        },
+        {
+          title: "Understand Volume of Pyramids",
+          activities: [
+            { type: "Video", title: "Volume of Triangular Prism & Cube", grade: "" },
+            { type: "Video", title: "Volume of Rectangular Pyramids Using Cubes", grade: "" },
+            { type: "Exercise", title: "Relate Prism and Pyramid Volumes", grade: "" },
+            { type: "Video", title: "Volume of Rectangular Pyramids Using Rectangular Prisms", grade: "" },
+            { type: "Exercise", title: "Prism and Pyramid Volumes", grade: "" },
+            { type: "Article", title: "Volume of a Pyramid or Cone", grade: "" }
+          ]
+        },
+        {
+          title: "Volume and Surface Area: Unit Test",
+          activities: [
+            { type: "Test", title: "Volume and Surface Area Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Data Representations",
+      lessons: [
+        {
+          title: "Intro to Circle Graphs",
+          activities: [
+            { type: "Video", title: "Reading Pie Graphs (Circle Graphs)", grade: "" },
+            { type: "Exercise", title: "Plotting Pie Charts", grade: "" }
+          ]
+        },
+        {
+          title: "Comparing Distributions",
+          activities: [
+            { type: "Video", title: "Frequency Tables & Dot Plots", grade: "" },
+            { type: "Exercise", title: "Estimate Center Using Dot Plots", grade: "" },
+            { type: "Video", title: "Comparing Distributions with Dot Plots", grade: "" },
+            { type: "Exercise", title: "Comparing Center and Spread", grade: "" }
+          ]
+        },
+        {
+          title: "Sampling Populations",
+          activities: [
+            { type: "Video", title: "Reasonable Samples", grade: "" },
+            { type: "Exercise", title: "Valid Claims", grade: "" },
+            { type: "Exercise", title: "Making Inferences from Random Samples", grade: "" }
+          ]
+        },
+        {
+          title: "Data Representations: Unit Test",
+          activities: [
+            { type: "Test", title: "Data Representations Unit Test", grade: "" }
+          ]
+        }
+      ]
     }
   ]
 }
