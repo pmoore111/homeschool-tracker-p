@@ -662,6 +662,177 @@ export const MATH_CURRICULUM: Curriculum = {
     {
       unit: "Proportional Reasoning with Ratios and Rates",
       lessons: []
+    },
+    {
+      unit: "Graphs and Two-Variable Equations",
+      lessons: [
+        {
+          title: "Two-variable Equation Intro",
+          activities: [
+            { type: "Video", title: "Solutions to 2-variable equations", grade: "" },
+            { type: "Video", title: "Worked example: solutions to 2-variable equations", grade: "" },
+            { type: "Exercise", title: "Solutions to 2-variable equations", grade: "" },
+            { type: "Video", title: "Completing solutions to 2-variable equations", grade: "" },
+            { type: "Exercise", title: "Complete solutions to 2-variable equations", grade: "" }
+          ]
+        },
+        {
+          title: "Graphing Two-variable Equations",
+          activities: [
+            { type: "Exercise", title: "Graph linear equations", grade: "" },
+            { type: "Video", title: "Identifying equations of proportional graphs", grade: "" },
+            { type: "Video", title: "Identifying equations of linear graphs", grade: "" },
+            { type: "Exercise", title: "Equations of linear graphs", grade: "" }
+          ]
+        },
+        {
+          title: "Modeling with Two Variables",
+          activities: [
+            { type: "Article", title: "Modeling with tables, equations, and graphs", grade: "" },
+            { type: "Video", title: "Modeling with linear equations: snow", grade: "" },
+            { type: "Video", title: "Modeling with linear tables", grade: "" },
+            { type: "Exercise", title: "Model with linear tables", grade: "" },
+            { type: "Exercise", title: "Model with linear equations", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Unit Test", title: "Graphs and Two-variable Equations: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Similarity",
+      lessons: [
+        {
+          title: "Scale Copies",
+          activities: [
+            { type: "Video", title: "Identifying corresponding parts of scaled copies", grade: "" },
+            { type: "Video", title: "Corresponding points and sides of scaled shapes", grade: "" },
+            { type: "Exercise", title: "Corresponding sides and points", grade: "" },
+            { type: "Video", title: "Identifying scale copies", grade: "" },
+            { type: "Exercise", title: "Identify scale copies", grade: "" }
+          ]
+        },
+        {
+          title: "Scale Factor",
+          activities: [
+            { type: "Video", title: "Identifying scale factor in drawings", grade: "" },
+            { type: "Exercise", title: "Identify scale factor in scale drawings", grade: "" },
+            { type: "Video", title: "Interpreting scale factors in drawings", grade: "" },
+            { type: "Exercise", title: "Interpret scale factor in scale drawings", grade: "" },
+            { type: "Video", title: "Identifying values in scale copies", grade: "" },
+            { type: "Exercise", title: "Scale copies", grade: "" }
+          ]
+        },
+        {
+          title: "Scale Drawings",
+          activities: [
+            { type: "Video", title: "Scale drawings", grade: "" },
+            { type: "Video", title: "Scale drawing: centimeters to kilometers", grade: "" },
+            { type: "Exercise", title: "Scale drawings", grade: "" },
+            { type: "Video", title: "Creating scale drawings", grade: "" },
+            { type: "Video", title: "Making a scale drawing", grade: "" },
+            { type: "Exercise", title: "Construct scale drawings", grade: "" }
+          ]
+        },
+        {
+          title: "Similar Figures",
+          activities: [
+            { type: "Video", title: "Relating side lengths in similar figures", grade: "" },
+            { type: "Exercise", title: "Relationships in similar figures", grade: "" }
+          ]
+        },
+        {
+          title: "Similar Triangles",
+          activities: [
+            { type: "Video", title: "Intro to triangle similarity", grade: "" },
+            { type: "Video", title: "Checking triangle similarity with side length ratios", grade: "" },
+            { type: "Exercise", title: "Determine similar triangles: SSS", grade: "" },
+            { type: "Video", title: "Solving similar triangles", grade: "" },
+            { type: "Exercise", title: "Solve similar triangles (basic)", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Quiz", title: "Similarity: Quiz 1", grade: "" },
+            { type: "Quiz", title: "Similarity: Quiz 2", grade: "" },
+            { type: "Unit Test", title: "Similarity: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Probability",
+      lessons: [
+        {
+          title: "Basic Probability",
+          activities: [
+            { type: "Video", title: "Intro to theoretical probability", grade: "" },
+            { type: "Video", title: "Simple probability: yellow marble", grade: "" },
+            { type: "Video", title: "Simple probability: non-blue marble", grade: "" },
+            { type: "Exercise", title: "Simple probability sample spaces", grade: "" },
+            { type: "Exercise", title: "Simple probability", grade: "" },
+            { type: "Exercise", title: "Probability of complements", grade: "" },
+            { type: "Video", title: "Experimental probability", grade: "" },
+            { type: "Exercise", title: "Experimental probability", grade: "" }
+          ]
+        },
+        {
+          title: "Probability Models",
+          activities: [
+            { type: "Video", title: "Making predictions with probability", grade: "" },
+            { type: "Exercise", title: "Making predictions with probability", grade: "" },
+            { type: "Video", title: "Probability models example: frozen yogurt", grade: "" },
+            { type: "Exercise", title: "Probability models", grade: "" }
+          ]
+        },
+        {
+          title: "Compound Events and Sample Spaces",
+          activities: [
+            { type: "Video", title: "Sample spaces for compound events", grade: "" },
+            { type: "Exercise", title: "Sample spaces for compound events", grade: "" },
+            { type: "Video", title: "Die rolling probability", grade: "" },
+            { type: "Video", title: "Compound events example with tree diagram", grade: "" },
+            { type: "Video", title: "Independent events example: test taking", grade: "" },
+            { type: "Video", title: "Compound probability of independent events", grade: "" },
+            { type: "Exercise", title: "Probabilities of compound events", grade: "" },
+            { type: "Video", title: "Free-throw probability", grade: "" },
+            { type: "Video", title: "Three-pointer vs free-throw probability", grade: "" }
+          ]
+        },
+        {
+          title: "Venn Diagrams and the Addition Rule",
+          activities: [
+            { type: "Video", title: "Probability with Venn diagrams", grade: "" },
+            { type: "Video", title: "Addition rule for probability", grade: "" },
+            { type: "Exercise", title: "Two-way tables, Venn diagrams, and probability", grade: "" }
+          ]
+        },
+        {
+          title: "Estimating Probabilities Using Simulation",
+          activities: [
+            { type: "Video", title: "Random numbers for experimental probability", grade: "" },
+            { type: "Video", title: "Random number list to run experiment", grade: "" },
+            { type: "Exercise", title: "Interpret results of simulations", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Quiz", title: "Probability: Quiz 1", grade: "" },
+            { type: "Quiz", title: "Probability: Quiz 2", grade: "" },
+            { type: "Unit Test", title: "Probability: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Circles and Composite Figures",
+      lessons: []
     }
   ]
 }
