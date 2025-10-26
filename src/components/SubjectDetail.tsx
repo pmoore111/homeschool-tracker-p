@@ -6,9 +6,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { ArrowLeft, Plus, Trash } from '@phosphor-icons/react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ArrowLeft, Plus, Trash, BookOpen, ListChecks } from '@phosphor-icons/react'
 import { Subject, Assignment } from '@/lib/types'
 import { calculateSubjectAverage, getLetterGrade, formatDate } from '@/lib/helpers'
+import { CurriculumView } from './CurriculumView'
 import { toast } from 'sonner'
 
 interface SubjectDetailProps {
@@ -89,10 +91,12 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
             {assignments.length} {assignments.length === 1 ? 'assignment' : 'assignments'}
           </p>
         </div>
-        <Button onClick={() => setIsAddDialogOpen(true)}>
-          <Plus className="mr-2" />
-          Add Assignment
-        </Button>
+        {!subject.curriculum && (
+          <Button onClick={() => setIsAddDialogOpen(true)}>
+            <Plus className="mr-2" />
+            Add Assignment
+          </Button>
+        )}
       </div>
 
       <Card>
@@ -113,65 +117,147 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Assignments</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {sortedAssignments.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground mb-4">No assignments yet</p>
-              <Button onClick={() => setIsAddDialogOpen(true)}>
-                <Plus className="mr-2" />
-                Add First Assignment
-              </Button>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Assignment</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Score</TableHead>
-                  <TableHead className="text-right">Percentage</TableHead>
-                  <TableHead className="w-[50px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {sortedAssignments.map((assignment) => (
-                  <TableRow key={assignment.id}>
-                    <TableCell className="font-medium">
-                      {assignment.name}
-                      {assignment.notes && (
-                        <p className="text-sm text-muted-foreground mt-1">{assignment.notes}</p>
-                      )}
-                    </TableCell>
-                    <TableCell>{formatDate(assignment.date)}</TableCell>
-                    <TableCell className="text-right">
-                      {assignment.grade} / {assignment.maxPoints}
-                    </TableCell>
-                    <TableCell className="text-right font-medium">
-                      {Math.round((assignment.grade / assignment.maxPoints) * 100)}%
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          onDeleteAssignment(assignment.id)
-                          toast.success('Assignment deleted')
-                        }}
-                      >
-                        <Trash />
-                      </Button>
-                    </TableCell>
+      {subject.curriculum ? (
+        <Tabs defaultValue="curriculum" className="w-full">
+          <TabsList>
+            <TabsTrigger value="curriculum">
+              <BookOpen className="mr-2 h-4 w-4" />
+              Curriculum
+            </TabsTrigger>
+            <TabsTrigger value="assignments">
+              <ListChecks className="mr-2 h-4 w-4" />
+              All Assignments
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="curriculum" className="mt-6">
+            <CurriculumView 
+              curriculum={subject.curriculum}
+              subjectId={subject.id}
+              assignments={assignments}
+              onAddAssignment={onAddAssignment}
+            />
+          </TabsContent>
+          
+          <TabsContent value="assignments" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>All Assignments</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {sortedAssignments.length === 0 ? (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground">No assignments recorded yet</p>
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Assignment</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead className="text-right">Score</TableHead>
+                        <TableHead className="text-right">Percentage</TableHead>
+                        <TableHead className="w-[50px]"></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {sortedAssignments.map((assignment) => (
+                        <TableRow key={assignment.id}>
+                          <TableCell className="font-medium">
+                            {assignment.name}
+                            {assignment.notes && (
+                              <p className="text-sm text-muted-foreground mt-1">{assignment.notes}</p>
+                            )}
+                          </TableCell>
+                          <TableCell>{formatDate(assignment.date)}</TableCell>
+                          <TableCell className="text-right">
+                            {assignment.grade} / {assignment.maxPoints}
+                          </TableCell>
+                          <TableCell className="text-right font-medium">
+                            {Math.round((assignment.grade / assignment.maxPoints) * 100)}%
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => {
+                                onDeleteAssignment(assignment.id)
+                                toast.success('Assignment deleted')
+                              }}
+                            >
+                              <Trash />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Assignments</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {sortedAssignments.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground mb-4">No assignments yet</p>
+                <Button onClick={() => setIsAddDialogOpen(true)}>
+                  <Plus className="mr-2" />
+                  Add First Assignment
+                </Button>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Assignment</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead className="text-right">Score</TableHead>
+                    <TableHead className="text-right">Percentage</TableHead>
+                    <TableHead className="w-[50px]"></TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
+                </TableHeader>
+                <TableBody>
+                  {sortedAssignments.map((assignment) => (
+                    <TableRow key={assignment.id}>
+                      <TableCell className="font-medium">
+                        {assignment.name}
+                        {assignment.notes && (
+                          <p className="text-sm text-muted-foreground mt-1">{assignment.notes}</p>
+                        )}
+                      </TableCell>
+                      <TableCell>{formatDate(assignment.date)}</TableCell>
+                      <TableCell className="text-right">
+                        {assignment.grade} / {assignment.maxPoints}
+                      </TableCell>
+                      <TableCell className="text-right font-medium">
+                        {Math.round((assignment.grade / assignment.maxPoints) * 100)}%
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            onDeleteAssignment(assignment.id)
+                            toast.success('Assignment deleted')
+                          }}
+                        >
+                          <Trash />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
         <DialogContent>
