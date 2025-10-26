@@ -43,17 +43,19 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
   }
 
   const handleCheckboxToggle = (activity: Activity, unitName: string, lessonTitle: string, checked: boolean) => {
-    if (checked) {
-      onAddAssignment({
-        subjectId: subjectId,
-        name: activity.title,
-        grade: 100,
-        maxPoints: 100,
-        date: new Date().toISOString().split('T')[0],
-        notes: `${unitName} - ${lessonTitle}`
-      })
-      toast.success(`${activity.type} marked as complete`)
+    if (!checked) {
+      return
     }
+    
+    onAddAssignment({
+      subjectId: subjectId,
+      name: activity.title,
+      grade: 100,
+      maxPoints: 100,
+      date: new Date().toISOString().split('T')[0],
+      notes: `${unitName} - ${lessonTitle}`
+    })
+    toast.success(`${activity.type} marked as complete`)
   }
 
   const handleActivityClick = (activity: Activity, unitName: string, lessonTitle: string) => {
@@ -170,17 +172,19 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
                                     className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
                                   >
                                     <Checkbox
-                                      id={`activity-${activityIdx}`}
+                                      id={`activity-${unitIdx}-${lessonIdx}-${activityIdx}`}
                                       checked={completed}
-                                      onCheckedChange={(checked) => 
-                                        handleCheckboxToggle(activity, unit.unit, lesson.title, checked as boolean)
-                                      }
+                                      onCheckedChange={(checked) => {
+                                        if (checked && !completed) {
+                                          handleCheckboxToggle(activity, unit.unit, lesson.title, true)
+                                        }
+                                      }}
                                       disabled={completed}
                                       className="flex-shrink-0"
                                     />
                                     <label
-                                      htmlFor={`activity-${activityIdx}`}
-                                      className="flex-1 min-w-0 flex items-center gap-3 cursor-pointer"
+                                      htmlFor={`activity-${unitIdx}-${lessonIdx}-${activityIdx}`}
+                                      className={`flex-1 min-w-0 flex items-center gap-3 ${completed ? 'cursor-default' : 'cursor-pointer'}`}
                                     >
                                       <div className="flex-1 min-w-0">
                                         <div className={`font-medium truncate ${completed ? 'line-through text-muted-foreground' : ''}`}>
@@ -188,7 +192,7 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
                                         </div>
                                       </div>
                                       {getActivityTypeBadge(activity.type)}
-                                      {grade && (
+                                      {completed && grade && (
                                         <Badge variant="outline" className="ml-2">
                                           {grade}
                                         </Badge>

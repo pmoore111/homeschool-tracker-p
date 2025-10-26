@@ -28,7 +28,7 @@ export function AIDailyEntry({ onAddAssignments }: AIDailyEntryProps) {
     try {
       const subjectsList = SUBJECTS.map(s => `${s.name} (id: ${s.id})`).join(', ')
       
-      const promptText = `You are an educational assistant helping track a homeschool student's daily work.
+      const prompt = (window.spark.llmPrompt as any)`You are an educational assistant helping track a homeschool student's daily work.
 
 Available subjects: ${subjectsList}
 
@@ -49,7 +49,7 @@ ${input}
 
 Return ONLY valid JSON with the structure: {"assignments": [...]}`
       
-      const response = await window.spark.llm(promptText, 'gpt-4o', true)
+      const response = await window.spark.llm(prompt, 'gpt-4o', true)
       const result = JSON.parse(response)
 
       if (!result.assignments || !Array.isArray(result.assignments)) {
