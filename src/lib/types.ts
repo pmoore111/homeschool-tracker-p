@@ -362,49 +362,6 @@ export const BIOLOGY_CURRICULUM: Curriculum = {
           ]
         }
       ]
-    },
-    {
-      unit: "Evolution",
-      lessons: [
-        {
-          title: "Evolution and Common Ancestry",
-          activities: [
-            { type: "Video", title: "Evolution", grade: "" },
-            { type: "Article", title: "Evolution", grade: "" },
-            { type: "Video", title: "Common Ancestry and Evolutionary Trees", grade: "" },
-            { type: "Article", title: "Common Ancestry and Evolutionary Trees", grade: "" },
-            { type: "Exercise", title: "Understand: Evolution and Common Ancestry", grade: "" },
-            { type: "Exercise", title: "Apply: Evolutionary Trees", grade: "" }
-          ]
-        },
-        {
-          title: "The Fossil Record",
-          activities: [
-            { type: "Video", title: "Fossils", grade: "" },
-            { type: "Article", title: "Fossils", grade: "" },
-            { type: "Video", title: "Earth's Fossil Record", grade: "" },
-            { type: "Article", title: "Earth's Fossil Record", grade: "" },
-            { type: "Exercise", title: "Understand: The Fossil Record", grade: "" },
-            { type: "Exercise", title: "Apply: The Fossil Record", grade: "" }
-          ]
-        },
-        {
-          title: "Evidence of Evolution",
-          activities: [
-            { type: "Lesson", title: "Evidence of Evolution: Anatomy", grade: "" },
-            { type: "Lesson", title: "Evidence of Evolution: Embryology", grade: "" }
-          ]
-        },
-        {
-          title: "Assessments",
-          activities: [
-            { type: "Quiz", title: "Evolution: Quiz 1", grade: "" },
-            { type: "Quiz", title: "Evolution: Quiz 2", grade: "" },
-            { type: "Quiz", title: "Evolution: Quiz 3", grade: "" },
-            { type: "Unit Test", title: "Evolution: Unit Test", grade: "" }
-          ]
-        }
-      ]
     }
   ]
 }
