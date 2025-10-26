@@ -1,4 +1,4 @@
-import { jsPDF } from 'jspdf'
+import jsPDF from 'jspdf'
 import { Assignment, AttendanceRecord, StudentInfo } from './types'
 import { SUBJECTS } from './types'
 import { calculateSubjectAverage, getLetterGrade, calculateGPA, calculateAttendanceRate, formatDate } from './helpers'
