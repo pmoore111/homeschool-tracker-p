@@ -172,7 +172,7 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
           </div>
         </CardHeader>
         <CardContent className="overflow-x-auto">
-          <div className="w-full min-w-[600px] max-w-4xl mx-auto">
+          <div className="w-full max-w-4xl mx-auto">
             <Calendar
               mode="single"
               selected={selectedDate}
@@ -181,8 +181,8 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
               modifiersStyles={modifiersStyles}
               className="w-full p-0"
               classNames={{
-                months: "w-full",
-                month: "w-full space-y-6",
+                months: "w-full grid grid-cols-1",
+                month: "w-full space-y-4",
                 caption: "flex justify-center relative items-center mb-6",
                 caption_label: "text-2xl font-semibold",
                 nav: "flex items-center gap-2",
@@ -193,8 +193,8 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
                 head_row: "grid grid-cols-7 gap-2 mb-2",
                 head_cell: "text-muted-foreground font-semibold text-base h-10 flex items-center justify-center uppercase text-xs tracking-wider",
                 row: "grid grid-cols-7 gap-2 mb-2",
-                cell: "relative p-0 text-center",
-                day: "h-16 w-full p-2 font-medium text-base flex items-center justify-center hover:bg-accent/50 hover:text-accent-foreground rounded-lg transition-all border-2 border-border bg-card cursor-pointer",
+                cell: "relative p-0 text-center aspect-square",
+                day: "h-full w-full p-2 font-medium text-base flex items-center justify-center hover:bg-accent/50 hover:text-accent-foreground rounded-lg transition-all border-2 border-border bg-card cursor-pointer",
                 day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary ring-2 ring-primary ring-offset-2",
                 day_today: "border-primary border-2 font-bold",
                 day_outside: "text-muted-foreground/30 bg-muted/20",
