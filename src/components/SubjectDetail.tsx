@@ -7,9 +7,9 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ArrowLeft, Plus, Trash, BookOpen, ListChecks } from '@phosphor-icons/react'
+import { ArrowLeft, Plus, Trash, BookOpen, ListChecks, PencilSimple } from '@phosphor-icons/react'
 import { Subject, Assignment } from '@/lib/types'
-import { calculateSubjectAverage, getLetterGrade, formatDate } from '@/lib/helpers'
+import { calculateSubjectAverage, getLetterGrade, formatDate, getLocalDateString } from '@/lib/helpers'
 import { CurriculumView } from './CurriculumView'
 import { toast } from 'sonner'
 
@@ -18,16 +18,19 @@ interface SubjectDetailProps {
   assignments: Assignment[]
   onBack: () => void
   onAddAssignment: (assignment: Omit<Assignment, 'id'>) => void
+  onUpdateAssignment: (id: string, updatedAssignment: Omit<Assignment, 'id'>) => void
   onDeleteAssignment: (id: string) => void
 }
 
-export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, onDeleteAssignment }: SubjectDetailProps) {
+export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, onUpdateAssignment, onDeleteAssignment }: SubjectDetailProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [editingAssignment, setEditingAssignment] = useState<Assignment | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     grade: '',
     maxPoints: '100',
-    date: new Date().toISOString().split('T')[0],
+    date: getLocalDateString(),
     notes: ''
   })
 
@@ -68,11 +71,67 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
       name: '',
       grade: '',
       maxPoints: '100',
-      date: new Date().toISOString().split('T')[0],
+      date: getLocalDateString(),
       notes: ''
     })
     setIsAddDialogOpen(false)
     toast.success('Assignment added successfully')
+  }
+
+  const handleEditSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!editingAssignment) return
+    
+    const grade = parseFloat(formData.grade)
+    const maxPoints = parseFloat(formData.maxPoints)
+    
+    if (!formData.name.trim()) {
+      toast.error('Please enter an assignment name')
+      return
+    }
+    
+    if (isNaN(grade) || grade < 0) {
+      toast.error('Please enter a valid grade')
+      return
+    }
+    
+    if (isNaN(maxPoints) || maxPoints <= 0) {
+      toast.error('Please enter a valid max points value')
+      return
+    }
+
+    onUpdateAssignment(editingAssignment.id, {
+      subjectId: subject.id,
+      name: formData.name.trim(),
+      grade,
+      maxPoints,
+      date: formData.date,
+      notes: formData.notes.trim()
+    })
+
+    setFormData({
+      name: '',
+      grade: '',
+      maxPoints: '100',
+      date: getLocalDateString(),
+      notes: ''
+    })
+    setEditingAssignment(null)
+    setIsEditDialogOpen(false)
+    toast.success('Assignment updated successfully')
+  }
+
+  const handleEdit = (assignment: Assignment) => {
+    setEditingAssignment(assignment)
+    setFormData({
+      name: assignment.name,
+      grade: assignment.grade.toString(),
+      maxPoints: assignment.maxPoints.toString(),
+      date: assignment.date,
+      notes: assignment.notes || ''
+    })
+    setIsEditDialogOpen(true)
   }
 
   const sortedAssignments = [...assignments].sort((a, b) => 
@@ -157,7 +216,7 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
                         <TableHead>Date</TableHead>
                         <TableHead className="text-right">Score</TableHead>
                         <TableHead className="text-right">Percentage</TableHead>
-                        <TableHead className="w-[50px]"></TableHead>
+                        <TableHead className="w-[100px]"></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -177,16 +236,25 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
                             {Math.round((assignment.grade / assignment.maxPoints) * 100)}%
                           </TableCell>
                           <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => {
-                                onDeleteAssignment(assignment.id)
-                                toast.success('Assignment deleted')
-                              }}
-                            >
-                              <Trash />
-                            </Button>
+                            <div className="flex gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleEdit(assignment)}
+                              >
+                                <PencilSimple />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  onDeleteAssignment(assignment.id)
+                                  toast.success('Assignment deleted')
+                                }}
+                              >
+                                <Trash />
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -219,7 +287,7 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
                     <TableHead>Date</TableHead>
                     <TableHead className="text-right">Score</TableHead>
                     <TableHead className="text-right">Percentage</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
+                    <TableHead className="w-[100px]"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -239,16 +307,25 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
                         {Math.round((assignment.grade / assignment.maxPoints) * 100)}%
                       </TableCell>
                       <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => {
-                            onDeleteAssignment(assignment.id)
-                            toast.success('Assignment deleted')
-                          }}
-                        >
-                          <Trash />
-                        </Button>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleEdit(assignment)}
+                          >
+                            <PencilSimple />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              onDeleteAssignment(assignment.id)
+                              toast.success('Assignment deleted')
+                            }}
+                          >
+                            <Trash />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -326,6 +403,81 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
                 Cancel
               </Button>
               <Button type="submit">Add Assignment</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Assignment</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleEditSubmit}>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="edit-name">Assignment Name</Label>
+                <Input
+                  id="edit-name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g., Chapter 5 Quiz"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-grade">Points Earned</Label>
+                  <Input
+                    id="edit-grade"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={formData.grade}
+                    onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-maxPoints">Max Points</Label>
+                  <Input
+                    id="edit-maxPoints"
+                    type="number"
+                    step="0.01"
+                    min="0.01"
+                    value={formData.maxPoints}
+                    onChange={(e) => setFormData({ ...formData, maxPoints: e.target.value })}
+                    placeholder="100"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit-date">Date</Label>
+                <Input
+                  id="edit-date"
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit-notes">Notes (Optional)</Label>
+                <Textarea
+                  id="edit-notes"
+                  value={formData.notes}
+                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  placeholder="Additional notes about this assignment"
+                  rows={3}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => {
+                setIsEditDialogOpen(false)
+                setEditingAssignment(null)
+              }}>
+                Cancel
+              </Button>
+              <Button type="submit">Save Changes</Button>
             </DialogFooter>
           </form>
         </DialogContent>

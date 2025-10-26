@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { BookOpen, CheckCircle, Circle } from '@phosphor-icons/react'
 import { Curriculum, Activity, Assignment } from '@/lib/types'
+import { getLocalDateString } from '@/lib/helpers'
 import { toast } from 'sonner'
 
 interface CurriculumViewProps {
@@ -24,7 +25,7 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
   const [gradeFormData, setGradeFormData] = useState({
     grade: '',
     maxPoints: '100',
-    date: new Date().toISOString().split('T')[0]
+    date: getLocalDateString()
   })
 
   const isActivityCompleted = (activityTitle: string) => {
@@ -52,7 +53,7 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
       name: activity.title,
       grade: 100,
       maxPoints: 100,
-      date: new Date().toISOString().split('T')[0],
+      date: getLocalDateString(),
       notes: `${unitName} - ${lessonTitle}`
     })
     toast.success(`${activity.type} marked as complete`)
@@ -77,7 +78,7 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
       setGradeFormData({
         grade: '',
         maxPoints: '100',
-        date: new Date().toISOString().split('T')[0]
+        date: getLocalDateString()
       })
     }
   }

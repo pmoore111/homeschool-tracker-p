@@ -39,6 +39,12 @@ function App() {
     setAssignments((current) => [...(current || []), ...newAssignments])
   }
 
+  const handleUpdateAssignment = (id: string, updatedAssignment: Omit<Assignment, 'id'>) => {
+    setAssignments((current) => 
+      (current || []).map(a => a.id === id ? { ...updatedAssignment, id } : a)
+    )
+  }
+
   const handleDeleteAssignment = (id: string) => {
     setAssignments((current) => (current || []).filter(a => a.id !== id))
   }
@@ -97,6 +103,7 @@ function App() {
             assignments={subjectAssignments}
             onBack={handleBackToDashboard}
             onAddAssignment={handleAddAssignment}
+            onUpdateAssignment={handleUpdateAssignment}
             onDeleteAssignment={handleDeleteAssignment}
           />
         ) : (

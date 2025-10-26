@@ -6,6 +6,7 @@ import { Sparkle, CheckCircle, Warning } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import { Assignment } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
+import { getLocalDateString } from '@/lib/helpers'
 
 interface AIDailyEntryProps {
   onAddAssignments: (assignments: Omit<Assignment, 'id'>[]) => void
@@ -67,7 +68,7 @@ Return ONLY valid JSON with the structure: {"assignments": [...]}`
           name: a.name || 'Untitled Assignment',
           grade: Number(a.grade) || 0,
           maxPoints: Number(a.maxPoints) || 100,
-          date: a.date || new Date().toISOString().split('T')[0],
+          date: a.date || getLocalDateString(),
           notes: a.notes || ''
         }
       })
