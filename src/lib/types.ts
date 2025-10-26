@@ -366,8 +366,308 @@ export const BIOLOGY_CURRICULUM: Curriculum = {
   ]
 }
 
+export const MATH_CURRICULUM: Curriculum = {
+  course: "7th Grade Math (TX TEKS)",
+  units: [
+    {
+      unit: "Number and Operations",
+      lessons: [
+        {
+          title: "Sets of Numbers",
+          activities: [
+            { type: "Video", title: "Relationships between sets of rational numbers", grade: "" },
+            { type: "Exercise", title: "Visualize relationships between sets of rational numbers", grade: "" }
+          ]
+        },
+        {
+          title: "Adding and Subtracting Rational Numbers",
+          activities: [
+            { type: "Video", title: "Adding fractions with different signs", grade: "" },
+            { type: "Video", title: "Adding & subtracting fractions", grade: "" },
+            { type: "Exercise", title: "Adding & subtracting negative fractions", grade: "" },
+            { type: "Exercise", title: "Adding & subtracting rational numbers", grade: "" }
+          ]
+        },
+        {
+          title: "Adding and Subtracting Negative Numbers: Variables",
+          activities: [
+            { type: "Video", title: "Substitution with negative numbers", grade: "" },
+            { type: "Exercise", title: "Substitution with negative numbers", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 1",
+          activities: [
+            { type: "Quiz", title: "Number and Operations: Quiz 1", grade: "" }
+          ]
+        },
+        {
+          title: "Multiplication and Division Word Problems with Negatives",
+          activities: [
+            { type: "Video", title: "Interpreting multiplication & division of negative numbers", grade: "" },
+            { type: "Exercise", title: "Multiplying & dividing negative numbers word problems", grade: "" }
+          ]
+        },
+        {
+          title: "Understanding Multiplying and Dividing Fractions",
+          activities: [
+            { type: "Video", title: "Negative signs in fractions", grade: "" },
+            { type: "Exercise", title: "Negative signs in fractions", grade: "" }
+          ]
+        },
+        {
+          title: "Multiplying and Dividing Negative Fractions",
+          activities: [
+            { type: "Video", title: "Multiplying positive and negative fractions", grade: "" },
+            { type: "Exercise", title: "Multiplying positive and negative fractions", grade: "" },
+            { type: "Video", title: "Dividing fractions: 3/5 ÷ 1/2", grade: "" },
+            { type: "Video", title: "Dividing negative fractions", grade: "" },
+            { type: "Exercise", title: "Dividing positive and negative fractions", grade: "" },
+            { type: "Video", title: "Dividing mixed numbers", grade: "" },
+            { type: "Exercise", title: "Dividing mixed numbers with negatives", grade: "" }
+          ]
+        },
+        {
+          title: "Properties of Multiplication and Division",
+          activities: [
+            { type: "Video", title: "Equivalent expressions with negative numbers (multiplication and division)", grade: "" },
+            { type: "Exercise", title: "Equivalent expressions with negative numbers (multiplication and division)", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 2",
+          activities: [
+            { type: "Quiz", title: "Number and Operations: Quiz 2", grade: "" }
+          ]
+        },
+        {
+          title: "Sales Tax",
+          activities: [
+            { type: "Video", title: "Percent word problems: tax and discount", grade: "" },
+            { type: "Exercise", title: "Sales tax", grade: "" }
+          ]
+        },
+        {
+          title: "Income Tax Withholding",
+          activities: [
+            { type: "Article", title: "Tax forms", grade: "" },
+            { type: "Article", title: "Your guide to key tax terms", grade: "" },
+            { type: "Exercise", title: "Tax forms and tax terms", grade: "" },
+            { type: "Video", title: "Anatomy of a paycheck", grade: "" },
+            { type: "Video", title: "Intro to the W-4", grade: "" },
+            { type: "Video", title: "Tax brackets and progressive taxation", grade: "" }
+          ]
+        },
+        {
+          title: "Net Worth",
+          activities: [
+            { type: "Video", title: "What is net worth?", grade: "" },
+            { type: "Article", title: "Assets, liabilities, and net worth", grade: "" },
+            { type: "Exercise", title: "Find net worth", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 3",
+          activities: [
+            { type: "Quiz", title: "Number and Operations: Quiz 3", grade: "" },
+            { type: "Unit Test", title: "Number and Operations: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "One-variable Equations and Inequalities",
+      lessons: [
+        {
+          title: "Solutions to Equations",
+          activities: [
+            { type: "Video", title: "Testing solutions to equations", grade: "" },
+            { type: "Exercise", title: "Testing solutions to equations", grade: "" }
+          ]
+        },
+        {
+          title: "Two-step Equation Intro",
+          activities: [
+            { type: "Video", title: "Modeling two-step equations", grade: "" },
+            { type: "Exercise", title: "Model two-step equations", grade: "" },
+            { type: "Exercise", title: "Two-step equation visual models", grade: "" },
+            { type: "Video", title: "Intro to two-step equations", grade: "" },
+            { type: "Video", title: "Two-step equations intuition", grade: "" },
+            { type: "Video", title: "Worked example: two-step equations", grade: "" },
+            { type: "Exercise", title: "Two-step equations", grade: "" },
+            { type: "Video", title: "Graphing two-step equations", grade: "" },
+            { type: "Exercise", title: "Graph two-step equations", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 1",
+          activities: [
+            { type: "Quiz", title: "One-variable Equations and Inequalities: Quiz 1", grade: "" }
+          ]
+        },
+        {
+          title: "Two-step Equations with Decimals and Fractions",
+          activities: [
+            { type: "Video", title: "Two-step equations with decimals and fractions", grade: "" },
+            { type: "Exercise", title: "Two-step equations with decimals and fractions", grade: "" },
+            { type: "Video", title: "Find the mistake: two-step equations", grade: "" },
+            { type: "Exercise", title: "Find the mistake: two-step equations", grade: "" }
+          ]
+        },
+        {
+          title: "Two-step Equation Word Problems",
+          activities: [
+            { type: "Video", title: "Two-step equation word problem: garden", grade: "" },
+            { type: "Video", title: "Two-step equation word problem: oranges", grade: "" },
+            { type: "Exercise", title: "Interpret two-step equation word problems", grade: "" },
+            { type: "Exercise", title: "Two-step equations word problems", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 2",
+          activities: [
+            { type: "Quiz", title: "One-variable Equations and Inequalities: Quiz 2", grade: "" }
+          ]
+        },
+        {
+          title: "Solutions to Inequalities",
+          activities: [
+            { type: "Video", title: "Testing solutions to inequalities", grade: "" },
+            { type: "Exercise", title: "Testing solutions to inequalities", grade: "" }
+          ]
+        },
+        {
+          title: "Two-step Inequalities",
+          activities: [
+            { type: "Video", title: "Modeling two step inequalities", grade: "" },
+            { type: "Video", title: "Modeling inequalities with negative coefficients", grade: "" },
+            { type: "Exercise", title: "Model two-step inequalities", grade: "" },
+            { type: "Exercise", title: "Two-step inequality visual models", grade: "" },
+            { type: "Video", title: "Two-step inequalities", grade: "" },
+            { type: "Exercise", title: "Two-step inequalities", grade: "" }
+          ]
+        },
+        {
+          title: "Two-step Inequalities and Equations Word Problems",
+          activities: [
+            { type: "Video", title: "Two-step inequality word problem: apples", grade: "" },
+            { type: "Video", title: "Two-step inequality word problem: R&B", grade: "" },
+            { type: "Exercise", title: "Two-step inequality word problems", grade: "" },
+            { type: "Video", title: "Writing two step word problems", grade: "" },
+            { type: "Exercise", title: "Write two-step word problems", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 3",
+          activities: [
+            { type: "Quiz", title: "One-variable Equations and Inequalities: Quiz 3", grade: "" }
+          ]
+        },
+        {
+          title: "Discounts and Interest",
+          activities: [
+            { type: "Video", title: "Percent word problems: tax and discount", grade: "" },
+            { type: "Video", title: "Percent word problem: guavas", grade: "" },
+            { type: "Exercise", title: "Discount, markup, and commission word problems", grade: "" },
+            { type: "Video", title: "Combining discounts", grade: "" },
+            { type: "Video", title: "Comparing discounts", grade: "" },
+            { type: "Exercise", title: "Compare discounts", grade: "" }
+          ]
+        },
+        {
+          title: "Scaling a Budget",
+          activities: [
+            { type: "Video", title: "Family budget calculator", grade: "" },
+            { type: "Exercise", title: "Scale a budget", grade: "" }
+          ]
+        },
+        {
+          title: "Simple and Compound Interest",
+          activities: [
+            { type: "Exercise", title: "Variable expressions with exponents", grade: "" },
+            { type: "Video", title: "How to make your money grow", grade: "" },
+            { type: "Video", title: "Calculating simple & compound interest", grade: "" },
+            { type: "Article", title: "Compound growth", grade: "" },
+            { type: "Exercise", title: "Simple and compound interest", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 4",
+          activities: [
+            { type: "Quiz", title: "One-variable Equations and Inequalities: Quiz 4", grade: "" },
+            { type: "Unit Test", title: "One-variable Equations and Inequalities: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Geometric Equations",
+      lessons: [
+        {
+          title: "Vertical, Complementary, and Supplementary Angles",
+          activities: [
+            { type: "Video", title: "Complementary & supplementary angles", grade: "" },
+            { type: "Exercise", title: "Complementary and supplementary angles (visual)", grade: "" },
+            { type: "Exercise", title: "Complementary and supplementary angles (no visual)", grade: "" },
+            { type: "Article", title: "Complementary and supplementary angles review", grade: "" }
+          ]
+        },
+        {
+          title: "Missing Angle Problems",
+          activities: [
+            { type: "Video", title: "Vertical angles", grade: "" },
+            { type: "Exercise", title: "Finding missing angles", grade: "" },
+            { type: "Exercise", title: "Finding angle measures between intersecting lines", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 1",
+          activities: [
+            { type: "Quiz", title: "Geometric Equations: Quiz 1", grade: "" }
+          ]
+        },
+        {
+          title: "Missing Angles with Variables",
+          activities: [
+            { type: "Video", title: "Find measure of vertical angles", grade: "" },
+            { type: "Video", title: "Find measure of angles word problem", grade: "" },
+            { type: "Video", title: "Equation practice with complementary angles", grade: "" },
+            { type: "Video", title: "Equation practice with supplementary angles", grade: "" },
+            { type: "Video", title: "Equation practice with vertical angles", grade: "" },
+            { type: "Exercise", title: "Create equations to solve for missing angles", grade: "" },
+            { type: "Exercise", title: "Unknown angle problems (with algebra)", grade: "" },
+            { type: "Exercise", title: "Equation practice with angle addition", grade: "" }
+          ]
+        },
+        {
+          title: "Triangle Angles",
+          activities: [
+            { type: "Exercise", title: "Find angles in triangles", grade: "" },
+            { type: "Exercise", title: "Find angles in isosceles triangles", grade: "" },
+            { type: "Video", title: "Finding triangle angles with algebra", grade: "" },
+            { type: "Exercise", title: "Find interior triangle angles with algebra", grade: "" },
+            { type: "Video", title: "Triangle exterior angle example", grade: "" },
+            { type: "Video", title: "Worked example: Triangle angles (diagram)", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments 2",
+          activities: [
+            { type: "Quiz", title: "Geometric Equations: Quiz 2", grade: "" },
+            { type: "Unit Test", title: "Geometric Equations: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Proportional Reasoning with Ratios and Rates",
+      lessons: []
+    }
+  ]
+}
+
 export const SUBJECTS: Subject[] = [
-  { id: 'math', name: 'Math', icon: 'Calculator', color: 'oklch(0.55 0.18 250)' },
+  { id: 'math', name: 'Math', icon: 'Calculator', color: 'oklch(0.55 0.18 250)', curriculum: MATH_CURRICULUM },
   { id: 'biology', name: 'Biology', icon: 'Flask', color: 'oklch(0.55 0.18 150)', curriculum: BIOLOGY_CURRICULUM },
   { id: 'bible', name: 'Bible', icon: 'BookBookmark', color: 'oklch(0.50 0.15 300)' },
   { id: 'reading', name: 'Reading', icon: 'BookOpen', color: 'oklch(0.55 0.18 30)' },
