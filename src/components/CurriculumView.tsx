@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
 import { BookOpen, CheckCircle, Circle } from '@phosphor-icons/react'
 import { Curriculum, Activity, Assignment } from '@/lib/types'
 import { toast } from 'sonner'
@@ -37,7 +38,29 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
     return `${percentage}%`
   }
 
+  const isCheckableType = (activityType: string) => {
+    return activityType === 'Video' || activityType === 'Article'
+  }
+
+  const handleCheckboxToggle = (activity: Activity, unitName: string, lessonTitle: string, checked: boolean) => {
+    if (checked) {
+      onAddAssignment({
+        subjectId: subjectId,
+        name: activity.title,
+        grade: 100,
+        maxPoints: 100,
+        date: new Date().toISOString().split('T')[0],
+        notes: `${unitName} - ${lessonTitle}`
+      })
+      toast.success(`${activity.type} marked as complete`)
+    }
+  }
+
   const handleActivityClick = (activity: Activity, unitName: string, lessonTitle: string) => {
+    if (isCheckableType(activity.type)) {
+      return
+    }
+
     setSelectedActivity({ activity, unitName, lessonTitle })
     setIsGradeDialogOpen(true)
     
@@ -89,11 +112,6 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
     toast.success('Grade recorded successfully')
   }
 
-  const getActivityIcon = (type: string) => {
-    const isCompleted = selectedActivity ? isActivityCompleted(selectedActivity.activity.title) : false
-    return isCompleted ? <CheckCircle size={18} weight="fill" className="text-green-600" /> : <Circle size={18} />
-  }
-
   const getActivityTypeBadge = (type: string) => {
     const colors: Record<string, string> = {
       'Video': 'bg-blue-100 text-blue-700',
@@ -143,6 +161,42 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
                             {lesson.activities.map((activity, activityIdx) => {
                               const completed = isActivityCompleted(activity.title)
                               const grade = getActivityGrade(activity.title)
+                              const isCheckable = isCheckableType(activity.type)
+                              
+                              if (isCheckable) {
+                                return (
+                                  <div
+                                    key={activityIdx}
+                                    className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                                  >
+                                    <Checkbox
+                                      id={`activity-${activityIdx}`}
+                                      checked={completed}
+                                      onCheckedChange={(checked) => 
+                                        handleCheckboxToggle(activity, unit.unit, lesson.title, checked as boolean)
+                                      }
+                                      disabled={completed}
+                                      className="flex-shrink-0"
+                                    />
+                                    <label
+                                      htmlFor={`activity-${activityIdx}`}
+                                      className="flex-1 min-w-0 flex items-center gap-3 cursor-pointer"
+                                    >
+                                      <div className="flex-1 min-w-0">
+                                        <div className={`font-medium truncate ${completed ? 'line-through text-muted-foreground' : ''}`}>
+                                          {activity.title}
+                                        </div>
+                                      </div>
+                                      {getActivityTypeBadge(activity.type)}
+                                      {grade && (
+                                        <Badge variant="outline" className="ml-2">
+                                          {grade}
+                                        </Badge>
+                                      )}
+                                    </label>
+                                  </div>
+                                )
+                              }
                               
                               return (
                                 <button
