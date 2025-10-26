@@ -32,26 +32,20 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
 
   const modifiersStyles = {
     present: {
-      backgroundColor: 'oklch(0.55 0.18 150)',
-      color: 'white',
-      fontWeight: 'bold',
-      borderColor: 'oklch(0.45 0.18 150)',
-      borderWidth: '2px'
+      position: 'relative' as const
     },
     absent: {
-      backgroundColor: 'oklch(0.55 0.22 25)',
-      color: 'white',
-      fontWeight: 'bold',
-      borderColor: 'oklch(0.45 0.22 25)',
-      borderWidth: '2px'
+      position: 'relative' as const
     },
     excused: {
-      backgroundColor: 'oklch(0.70 0.15 75)',
-      color: 'white',
-      fontWeight: 'bold',
-      borderColor: 'oklch(0.60 0.15 75)',
-      borderWidth: '2px'
+      position: 'relative' as const
     }
+  }
+
+  const modifiersClassNames = {
+    present: 'after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:h-1.5 after:w-1.5 after:rounded-full after:bg-[oklch(0.55_0.18_150)]',
+    absent: 'after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:h-1.5 after:w-1.5 after:rounded-full after:bg-[oklch(0.55_0.22_25)]',
+    excused: 'after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:h-1.5 after:w-1.5 after:rounded-full after:bg-[oklch(0.70_0.15_75)]'
   }
 
   return (
@@ -157,52 +151,50 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
             <CardTitle>Calendar</CardTitle>
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <div className="h-4 w-4 rounded border-2" style={{ backgroundColor: 'oklch(0.55 0.18 150)', borderColor: 'oklch(0.45 0.18 150)' }} />
+                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: 'oklch(0.55 0.18 150)' }} />
                 <span className="text-muted-foreground">Present</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="h-4 w-4 rounded border-2" style={{ backgroundColor: 'oklch(0.55 0.22 25)', borderColor: 'oklch(0.45 0.22 25)' }} />
+                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: 'oklch(0.55 0.22 25)' }} />
                 <span className="text-muted-foreground">Absent</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="h-4 w-4 rounded border-2" style={{ backgroundColor: 'oklch(0.70 0.15 75)', borderColor: 'oklch(0.60 0.15 75)' }} />
+                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: 'oklch(0.70 0.15 75)' }} />
                 <span className="text-muted-foreground">Excused</span>
               </div>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="overflow-x-auto">
-          <div className="w-full max-w-4xl mx-auto">
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={(date) => date && setSelectedDate(date)}
-              modifiers={modifiers}
-              modifiersStyles={modifiersStyles}
-              className="w-full p-0"
-              classNames={{
-                months: "w-full grid grid-cols-1",
-                month: "w-full space-y-4",
-                caption: "flex justify-center relative items-center mb-6",
-                caption_label: "text-2xl font-semibold",
-                nav: "flex items-center gap-2",
-                nav_button: "h-10 w-10 bg-transparent p-0 hover:bg-accent rounded-md transition-colors opacity-60 hover:opacity-100",
-                nav_button_previous: "absolute left-0",
-                nav_button_next: "absolute right-0",
-                table: "w-full border-collapse",
-                head_row: "grid grid-cols-7 gap-2 mb-2",
-                head_cell: "text-muted-foreground font-semibold text-base h-10 flex items-center justify-center uppercase text-xs tracking-wider",
-                row: "grid grid-cols-7 gap-2 mb-2",
-                cell: "relative p-0 text-center aspect-square",
-                day: "h-full w-full p-2 font-medium text-base flex items-center justify-center hover:bg-accent/50 hover:text-accent-foreground rounded-lg transition-all border-2 border-border bg-card cursor-pointer",
-                day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground border-primary ring-2 ring-primary ring-offset-2",
-                day_today: "border-primary border-2 font-bold",
-                day_outside: "text-muted-foreground/30 bg-muted/20",
-                day_disabled: "text-muted-foreground opacity-30 cursor-not-allowed",
-                day_hidden: "invisible",
-              }}
-            />
-          </div>
+        <CardContent>
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={(date) => date && setSelectedDate(date)}
+            modifiers={modifiers}
+            modifiersClassNames={modifiersClassNames}
+            className="w-full"
+            classNames={{
+              months: "w-full",
+              month: "w-full space-y-4",
+              caption: "flex justify-center pt-1 relative items-center mb-4",
+              caption_label: "text-base font-semibold",
+              nav: "flex items-center gap-1",
+              nav_button: "h-8 w-8 bg-transparent p-0 hover:bg-muted rounded-full transition-colors",
+              nav_button_previous: "absolute left-1",
+              nav_button_next: "absolute right-1",
+              table: "w-full border-collapse border border-border",
+              head_row: "flex border-b border-border",
+              head_cell: "text-muted-foreground flex-1 font-medium text-xs h-10 flex items-center justify-center border-r border-border last:border-r-0",
+              row: "flex border-b border-border last:border-b-0",
+              cell: "flex-1 relative p-0 text-center border-r border-border last:border-r-0",
+              day: "h-20 w-full p-1 font-normal text-sm flex flex-col items-start justify-start hover:bg-muted/50 transition-colors cursor-pointer",
+              day_selected: "bg-primary/10 hover:bg-primary/20 font-medium",
+              day_today: "font-bold [&>div]:bg-primary [&>div]:text-primary-foreground [&>div]:rounded-full [&>div]:h-6 [&>div]:w-6 [&>div]:flex [&>div]:items-center [&>div]:justify-center",
+              day_outside: "text-muted-foreground/40",
+              day_disabled: "text-muted-foreground/30 cursor-not-allowed",
+              day_hidden: "invisible",
+            }}
+          />
         </CardContent>
       </Card>
     </div>
