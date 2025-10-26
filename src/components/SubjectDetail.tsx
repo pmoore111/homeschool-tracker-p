@@ -195,8 +195,8 @@ export function SubjectDetail({ subject, assignments, onBack, onAddAssignment, o
                 )}
               </CardContent>
             </Card>
-                    id="grade"
-                    type="number"
+          </TabsContent>
+        </Tabs>
       ) : (
         <Card>
           <CardHeader>
