@@ -13,7 +13,7 @@ import { GraduationCap } from '@phosphor-icons/react'
 const STUDENT_INFO: StudentInfo = {
   name: 'Jordan Moore',
   grade: '7th Grade',
-  schoolYear: '2024-2025'
+  schoolYear: '2025-2026'
 }
 
 function App() {
