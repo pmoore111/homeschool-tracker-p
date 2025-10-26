@@ -661,7 +661,66 @@ export const MATH_CURRICULUM: Curriculum = {
     },
     {
       unit: "Proportional Reasoning with Ratios and Rates",
-      lessons: []
+      lessons: [
+        {
+          title: "Intro to Ratios",
+          activities: [
+            { type: "Video", title: "Understanding Ratios", grade: "" },
+            { type: "Exercise", title: "Identify Ratios", grade: "" }
+          ]
+        },
+        {
+          title: "Equivalent Ratios",
+          activities: [
+            { type: "Video", title: "Intro to Equivalent Ratios", grade: "" },
+            { type: "Exercise", title: "Find Equivalent Ratios", grade: "" }
+          ]
+        },
+        {
+          title: "Ratio Reasoning and Tables",
+          activities: [
+            { type: "Video", title: "Ratio Tables", grade: "" },
+            { type: "Exercise", title: "Solve with Ratio Tables", grade: "" }
+          ]
+        },
+        {
+          title: "Rates and Unit Rates",
+          activities: [
+            { type: "Video", title: "Intro to Rates", grade: "" },
+            { type: "Exercise", title: "Finding Unit Rates", grade: "" }
+          ]
+        },
+        {
+          title: "Proportions and Constant of Proportionality",
+          activities: [
+            { type: "Video", title: "What is a Proportion?", grade: "" },
+            { type: "Exercise", title: "Solve Proportions", grade: "" },
+            { type: "Video", title: "Constant of Proportionality", grade: "" },
+            { type: "Exercise", title: "Identify Constant of Proportionality", grade: "" }
+          ]
+        },
+        {
+          title: "Graphing Proportional Relationships",
+          activities: [
+            { type: "Video", title: "Intro to Proportional Graphs", grade: "" },
+            { type: "Exercise", title: "Graph Proportional Relationships", grade: "" }
+          ]
+        },
+        {
+          title: "Proportional Reasoning in Word Problems",
+          activities: [
+            { type: "Video", title: "Solving Proportion Word Problems", grade: "" },
+            { type: "Exercise", title: "Proportion Word Problems", grade: "" }
+          ]
+        },
+        {
+          title: "Proportional Reasoning: Quiz and Unit Test",
+          activities: [
+            { type: "Quiz", title: "Proportional Reasoning Quiz", grade: "" },
+            { type: "Test", title: "Proportional Reasoning Unit Test", grade: "" }
+          ]
+        }
+      ]
     },
     {
       unit: "Graphs and Two-Variable Equations",
