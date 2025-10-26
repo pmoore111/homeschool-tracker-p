@@ -82,7 +82,7 @@ export function AttendanceView({ attendance, onUpdateAttendance }: AttendanceVie
       const isToday = date.getTime() === today.getTime()
       
       days.push({
-        date,
+      })
         dayNumber: day,
         isCurrentMonth: true,
         isToday,
