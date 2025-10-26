@@ -1043,11 +1043,269 @@ export const MATH_CURRICULUM: Curriculum = {
   ]
 }
 
+export const READING_CURRICULUM: Curriculum = {
+  course: "7th Grade Reading and Vocabulary",
+  units: [
+    {
+      unit: "Blazing New Trails",
+      lessons: [
+        {
+          title: "Building Background Knowledge",
+          activities: [
+            { type: "Article", title: "Blazing New Trails: Welcome to the Unit!", grade: "" },
+            { type: "Article", title: "Blazing New Trails: Unit Vocabulary", grade: "" },
+            { type: "Video", title: "Latin and Greek Roots and Affixes", grade: "" }
+          ]
+        },
+        {
+          title: "Citing Text Evidence",
+          activities: [
+            { type: "Article", title: "Supporting Ideas with Text Evidence", grade: "" },
+            { type: "Video", title: "Citing Evidence in Literary Analysis", grade: "" },
+            { type: "Exercise", title: "Text Evidence", grade: "" },
+            { type: "Video", title: "Authentic | Vocabulary", grade: "" }
+          ]
+        },
+        {
+          title: "Making Inferences",
+          activities: [
+            { type: "Article", title: "Using Evidence to Make and Support Inferences", grade: "" },
+            { type: "Video", title: "Supporting an Inference with Logical Reasoning and Evidence", grade: "" },
+            { type: "Exercise", title: "Inferences", grade: "" }
+          ]
+        },
+        {
+          title: "Determining Central Idea and Theme",
+          activities: [
+            { type: "Article", title: "Identifying Multiple Central Ideas in a Text", grade: "" },
+            { type: "Video", title: "How Can a Text Have Two or More Central Ideas?", grade: "" },
+            { type: "Article", title: "How Character Change Reveals Theme", grade: "" },
+            { type: "Video", title: "Developing Themes", grade: "" },
+            { type: "Exercise", title: "Central Idea, Summary, and Theme", grade: "" }
+          ]
+        },
+        {
+          title: "Analyzing Idea and Story Development",
+          activities: [
+            { type: "Article", title: "Interactions Between Individuals, Events, and Ideas in a Text", grade: "" },
+            { type: "Video", title: "Analyzing Relationships in Informational Texts", grade: "" },
+            { type: "Article", title: "How Elements of a Story Interact", grade: "" },
+            { type: "Video", title: "The Elements of a Story | Reading", grade: "" },
+            { type: "Video", title: "The Elements of a Drama | Reading", grade: "" },
+            { type: "Exercise", title: "Idea and Story Development", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Unit Test", title: "Blazing New Trails: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Blazing New Trails: Long Passage Practice",
+      lessons: [
+        {
+          title: "Reading Literary Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Visualize", grade: "" },
+            { type: "Exercise", title: "Becoming Muhammad Ali", grade: "" },
+            { type: "Exercise", title: "The Dreamer", grade: "" }
+          ]
+        },
+        {
+          title: "Reading Informational Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Summarize as You Read", grade: "" },
+            { type: "Exercise", title: "Inaugural Ballers: The True Story of the First U.S. Women's Olympic Basketball Team", grade: "" },
+            { type: "Exercise", title: "The Boy Who Harnessed the Wind", grade: "" }
+          ]
+        },
+        {
+          title: "Reading Argumentative Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Set a Purpose for Reading", grade: "" },
+            { type: "Exercise", title: "Drinking Icebergs?", grade: "" },
+            { type: "Exercise", title: "Pocahontas (from Teen Trailblazers)", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Uncovering Meaning",
+      lessons: [
+        {
+          title: "Building Background Knowledge",
+          activities: [
+            { type: "Article", title: "Uncovering Meaning: Welcome to the Unit!", grade: "" },
+            { type: "Article", title: "Uncovering Meaning: Unit Vocabulary", grade: "" }
+          ]
+        },
+        {
+          title: "Interpreting Words in Context",
+          activities: [
+            { type: "Article", title: "How Does Word Choice Impact Meaning and Tone?", grade: "" },
+            { type: "Video", title: "Connotation", grade: "" },
+            { type: "Video", title: "The Elements of a Poem | Reading", grade: "" },
+            { type: "Exercise", title: "Words in Context", grade: "" },
+            { type: "Video", title: "Deception | Vocabulary", grade: "" }
+          ]
+        },
+        {
+          title: "Analyzing Text Structure",
+          activities: [
+            { type: "Article", title: "How Do Authors Structure a Text to Create Meaning?", grade: "" },
+            { type: "Video", title: "Part-to-Whole Relationships in Text Structure", grade: "" },
+            { type: "Article", title: "How Can the Form of a Poem or Drama Affect Its Meaning?", grade: "" },
+            { type: "Video", title: "Poetry Structures", grade: "" },
+            { type: "Video", title: "Drama Elements", grade: "" },
+            { type: "Exercise", title: "Text Structure", grade: "" }
+          ]
+        },
+        {
+          title: "Identifying Author's Purpose",
+          activities: [
+            { type: "Article", title: "What Techniques Can Authors Use to Convey Their Purpose?", grade: "" },
+            { type: "Video", title: "Analyzing an Author's Purpose", grade: "" },
+            { type: "Exercise", title: "Author's Purpose", grade: "" }
+          ]
+        },
+        {
+          title: "Determining Point of View",
+          activities: [
+            { type: "Article", title: "Determining an Author's Point of View", grade: "" },
+            { type: "Article", title: "Analyzing Contrasting Points of View", grade: "" },
+            { type: "Video", title: "How Point of View Affects Readers | Reading", grade: "" },
+            { type: "Exercise", title: "Point of View", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Unit Test", title: "Uncovering Meaning: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Uncovering Meaning: Long Passage Practice",
+      lessons: [
+        {
+          title: "Reading Literary Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Ask and Answer Questions", grade: "" },
+            { type: "Exercise", title: "They Call Me Güero & The Wild Book", grade: "" },
+            { type: "Exercise", title: "The Silence Between Us", grade: "" },
+            { type: "Exercise", title: "The Giver", grade: "" }
+          ]
+        },
+        {
+          title: "Reading Informational Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Scan Text Features", grade: "" },
+            { type: "Exercise", title: "Indigenous Ingenuity", grade: "" },
+            { type: "Exercise", title: "Hip Hop: Beats, Rhymes, Identity, and Empowerment", grade: "" }
+          ]
+        },
+        {
+          title: "Reading Argumentative Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Activate Background Knowledge", grade: "" },
+            { type: "Exercise", title: "True or False: A CIA Analyst's Guide to Spotting Fake News", grade: "" },
+            { type: "Exercise", title: "Preparing for a Global Tomorrow: The Case for Second Language Education", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Mysteries",
+      lessons: [
+        {
+          title: "Building Background Knowledge",
+          activities: [
+            { type: "Article", title: "Mysteries: Welcome to the Unit!", grade: "" },
+            { type: "Article", title: "Mysteries: Unit Vocabulary", grade: "" }
+          ]
+        },
+        {
+          title: "Comparing Media",
+          activities: [
+            { type: "Article", title: "Connecting Textual and Visual Evidence", grade: "" },
+            { type: "Video", title: "Interpreting Text Features | Reading", grade: "" },
+            { type: "Exercise", title: "Multimedia", grade: "" },
+            { type: "Video", title: "Contemporary | Vocabulary", grade: "" }
+          ]
+        },
+        {
+          title: "Evaluating Claims and Arguments",
+          activities: [
+            { type: "Video", title: "What Is an Argument?", grade: "" },
+            { type: "Video", title: "How Do Writers Use Examples to Get Their Points Across?", grade: "" },
+            { type: "Article", title: "Evaluating an Argument's Reasoning and Evidence", grade: "" },
+            { type: "Exercise", title: "Claims and Arguments", grade: "" }
+          ]
+        },
+        {
+          title: "Comparing Two Texts",
+          activities: [
+            { type: "Article", title: "Comparing Purposes, Evidence, and Interpretations Across Texts", grade: "" },
+            { type: "Video", title: "First and Secondhand Accounts | Reading", grade: "" },
+            { type: "Exercise", title: "Comparing Texts", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Unit Test", title: "Mysteries: Unit Test", grade: "" }
+          ]
+        }
+      ]
+    },
+    {
+      unit: "Mysteries: Long Passage Practice",
+      lessons: [
+        {
+          title: "Reading Literary Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Make and Check Predictions", grade: "" },
+            { type: "Exercise", title: "Fever 1793 & An American Plague", grade: "" },
+            { type: "Exercise", title: "And Then There Were None", grade: "" },
+            { type: "Exercise", title: "Elijah of Buxton", grade: "" }
+          ]
+        },
+        {
+          title: "Reading Informational Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Identify Text Structure", grade: "" },
+            { type: "Exercise", title: "All Thirteen: The Incredible Cave Rescue of the Thai Boys' Soccer Team", grade: "" },
+            { type: "Exercise", title: "The Mystery of the Bloop", grade: "" }
+          ]
+        },
+        {
+          title: "Reading Argumentative Texts",
+          activities: [
+            { type: "Article", title: "Reading Strategy: Use Context Clues", grade: "" },
+            { type: "Exercise", title: "Borderlands and the Mexican American Story", grade: "" },
+            { type: "Exercise", title: "The Mystery of the Golden Frog", grade: "" }
+          ]
+        },
+        {
+          title: "Assessments",
+          activities: [
+            { type: "Course Challenge", title: "7th Grade Reading and Vocab Challenge (30 Questions)", grade: "" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
 export const SUBJECTS: Subject[] = [
   { id: 'math', name: 'Math', icon: 'Calculator', color: 'oklch(0.55 0.18 250)', curriculum: MATH_CURRICULUM },
   { id: 'biology', name: 'Biology', icon: 'Flask', color: 'oklch(0.55 0.18 150)', curriculum: BIOLOGY_CURRICULUM },
   { id: 'bible', name: 'Bible', icon: 'BookBookmark', color: 'oklch(0.50 0.15 300)' },
-  { id: 'reading', name: 'Reading', icon: 'BookOpen', color: 'oklch(0.55 0.18 30)' },
+  { id: 'reading', name: 'Reading', icon: 'BookOpen', color: 'oklch(0.55 0.18 30)', curriculum: READING_CURRICULUM },
   { id: 'texas-history', name: 'Texas History', icon: 'MapPin', color: 'oklch(0.55 0.18 0)' },
   { id: 'health', name: 'Health', icon: 'Heart', color: 'oklch(0.60 0.18 120)' }
 ]
