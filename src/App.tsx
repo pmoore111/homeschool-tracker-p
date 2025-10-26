@@ -1,31 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Toaster } from '@/components/ui/sonner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
 import { DashboardView } from '@/components/DashboardView'
 import { SubjectDetail } from '@/components/SubjectDetail'
 import { AttendanceView } from '@/components/AttendanceView'
 import { ReportsView } from '@/components/ReportsView'
-import { StudentInfoDialog } from '@/components/StudentInfoDialog'
 import { Assignment, AttendanceRecord, StudentInfo } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
-import { GraduationCap, User } from '@phosphor-icons/react'
+import { GraduationCap } from '@phosphor-icons/react'
+
+const STUDENT_INFO: StudentInfo = {
+  name: 'Jordan Moore',
+  grade: '7th Grade',
+  schoolYear: '2024-2025'
+}
 
 function App() {
   const [assignments, setAssignments] = useKV<Assignment[]>('assignments', [])
   const [attendance, setAttendance] = useKV<AttendanceRecord[]>('attendance', [])
-  const [studentInfo, setStudentInfo] = useKV<StudentInfo | null>('studentInfo', null)
   
   const [activeTab, setActiveTab] = useState('dashboard')
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
-  const [showStudentDialog, setShowStudentDialog] = useState(false)
-
-  useEffect(() => {
-    if (!studentInfo) {
-      setShowStudentDialog(true)
-    }
-  }, [studentInfo])
 
   const handleAddAssignment = (assignment: Omit<Assignment, 'id'>) => {
     const newAssignment: Assignment = {
@@ -68,12 +64,6 @@ function App() {
     ? (assignments || []).filter(a => a.subjectId === selectedSubjectId)
     : []
 
-  const defaultStudentInfo: StudentInfo = {
-    name: 'Student',
-    grade: 'N/A',
-    schoolYear: new Date().getFullYear() + '-' + (new Date().getFullYear() + 1)
-  }
-
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
@@ -85,15 +75,9 @@ function App() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold tracking-tight">Homeschool Tracker</h1>
-                <p className="text-sm text-muted-foreground">Academic Progress Management</p>
+                <p className="text-sm text-muted-foreground">{STUDENT_INFO.name} • {STUDENT_INFO.grade} • {STUDENT_INFO.schoolYear}</p>
               </div>
             </div>
-            {studentInfo && (
-              <Button variant="outline" size="sm" onClick={() => setShowStudentDialog(true)}>
-                <User className="mr-2" />
-                Edit Student Info
-              </Button>
-            )}
           </div>
         </div>
       </header>
@@ -119,7 +103,7 @@ function App() {
               <DashboardView
                 assignments={assignments || []}
                 attendance={attendance || []}
-                studentInfo={studentInfo || defaultStudentInfo}
+                studentInfo={STUDENT_INFO}
                 onSelectSubject={handleSelectSubject}
               />
             </TabsContent>
@@ -135,19 +119,12 @@ function App() {
               <ReportsView
                 assignments={assignments || []}
                 attendance={attendance || []}
-                studentInfo={studentInfo || defaultStudentInfo}
+                studentInfo={STUDENT_INFO}
               />
             </TabsContent>
           </Tabs>
         )}
       </main>
-
-      <StudentInfoDialog
-        open={showStudentDialog}
-        onOpenChange={setShowStudentDialog}
-        studentInfo={studentInfo || null}
-        onSave={(info) => setStudentInfo(info)}
-      />
 
       <Toaster />
     </div>
