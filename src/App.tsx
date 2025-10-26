@@ -31,6 +31,14 @@ function App() {
     setAssignments((current) => [...(current || []), newAssignment])
   }
 
+  const handleAddAssignments = (assignments: Omit<Assignment, 'id'>[]) => {
+    const newAssignments: Assignment[] = assignments.map((assignment, index) => ({
+      ...assignment,
+      id: (Date.now() + index).toString()
+    }))
+    setAssignments((current) => [...(current || []), ...newAssignments])
+  }
+
   const handleDeleteAssignment = (id: string) => {
     setAssignments((current) => (current || []).filter(a => a.id !== id))
   }
@@ -105,6 +113,7 @@ function App() {
                 attendance={attendance || []}
                 studentInfo={STUDENT_INFO}
                 onSelectSubject={handleSelectSubject}
+                onAddAssignments={handleAddAssignments}
               />
             </TabsContent>
             

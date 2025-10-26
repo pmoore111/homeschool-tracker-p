@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { SubjectCard } from './SubjectCard'
+import { AIDailyEntry } from './AIDailyEntry'
 import { Assignment, AttendanceRecord, StudentInfo } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { calculateSubjectAverage, calculateGPA, calculateAttendanceRate } from '@/lib/helpers'
@@ -10,9 +11,10 @@ interface DashboardViewProps {
   attendance: AttendanceRecord[]
   studentInfo: StudentInfo
   onSelectSubject: (subjectId: string) => void
+  onAddAssignments: (assignments: Omit<Assignment, 'id'>[]) => void
 }
 
-export function DashboardView({ assignments, attendance, studentInfo, onSelectSubject }: DashboardViewProps) {
+export function DashboardView({ assignments, attendance, studentInfo, onSelectSubject, onAddAssignments }: DashboardViewProps) {
   const subjectAverages = SUBJECTS.map(subject => 
     calculateSubjectAverage(assignments.filter(a => a.subjectId === subject.id))
   ).filter(avg => avg > 0)
@@ -71,6 +73,8 @@ export function DashboardView({ assignments, attendance, studentInfo, onSelectSu
           </CardContent>
         </Card>
       </div>
+
+      <AIDailyEntry onAddAssignments={onAddAssignments} />
 
       <div>
         <h3 className="text-xl font-semibold mb-4">Subjects</h3>

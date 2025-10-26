@@ -12,6 +12,13 @@ The app manages multiple interconnected features (subjects, grades, attendance, 
 
 ## Essential Features
 
+### AI Daily Entry
+- **Functionality**: Natural language input for daily work using AI to parse and create multiple assignments at once
+- **Purpose**: Streamline daily entry by describing all work in conversational language instead of manual form entry per assignment
+- **Trigger**: User types description of day's work in AI Daily Entry card on dashboard
+- **Progression**: Dashboard → Type daily summary → Click "Process with AI" → AI extracts assignments → Review preview → Confirm to add all
+- **Success criteria**: AI correctly identifies subjects, assignment names, grades, and dates from natural language; creates multiple assignments simultaneously; shows clear preview before confirming; handles various input formats gracefully
+
 ### Subject Management
 - **Functionality**: Track grades and assignments across Math, Biology, Bible, Reading, Texas History, and Health
 - **Purpose**: Maintain organized academic records per subject area
@@ -49,6 +56,10 @@ The app manages multiple interconnected features (subjects, grades, attendance, 
 - **PDF generation errors**: Show user-friendly toast notifications on success or failure
 - **Empty attendance records**: Handle PDF generation gracefully when no attendance data exists
 - **Large calendar display**: Ensure calendar scales appropriately and remains readable on different screen sizes
+- **AI parsing errors**: Show clear error messages when AI can't parse the input; provide examples for better results
+- **Ambiguous subject names**: AI maps similar terms to correct subjects (e.g., "science" → "biology")
+- **Missing grade information**: AI estimates reasonable defaults when grades aren't specified in description
+- **Multiple assignments for same subject**: AI correctly creates separate entries for each mentioned task
 
 ## Design Direction
 The design should feel professional, trustworthy, and educational - similar to official school portals but warmer and more personal. Clean interface with academic color palette that conveys organization and competence. Minimal but purposeful design that prioritizes clarity and usability.
@@ -119,6 +130,9 @@ Subtle, purposeful animations that reinforce interactions without distracting fr
   - Printer (print reports)
   - FilePdf (PDF generation)
   - FileArrowDown (download complete report)
+  - Sparkle (AI features, processing states)
+  - CheckCircle (confirmation, success states)
+  - Warning (cancel, review actions)
   
 - **Spacing**: 
   - Page padding: p-6 (24px)
