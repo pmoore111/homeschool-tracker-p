@@ -32,6 +32,7 @@ const STUDENT_INFO: StudentInfo = {
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [isInitialized, setIsInitialized] = useState(false)
   const [assignments, setAssignments] = useState<Assignment[]>([])
   const [attendance, setAttendance] = useState<AttendanceRecord[]>([])
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
@@ -62,6 +63,7 @@ function App() {
         setAttendance([])
         setJournalEntries([])
       } finally {
+        setIsInitialized(true)
         setIsLoading(false)
       }
     }
@@ -71,38 +73,46 @@ function App() {
 
   // Save to localStorage whenever data changes
   useEffect(() => {
+    if (!isInitialized) return
+
     try {
       saveStoredData('assignments', assignments)
     } catch (error) {
       console.error('Error saving assignments:', error)
     }
-  }, [assignments])
+  }, [assignments, isInitialized])
 
   useEffect(() => {
+    if (!isInitialized) return
+
     try {
       saveStoredData('attendance', attendance)
     } catch (error) {
       console.error('Error saving attendance:', error)
     }
-  }, [attendance])
+  }, [attendance, isInitialized])
 
   useEffect(() => {
+    if (!isInitialized) return
+
     try {
       saveStoredData('journal', journalEntries)
     } catch (error) {
       console.error('Error saving journal:', error)
     }
-  }, [journalEntries])
+  }, [journalEntries, isInitialized])
 
   // Start auto-backup on mount
   useEffect(() => {
+    if (!isInitialized) return
+
     try {
       const backupInterval = startAutoBackup()
       return () => clearInterval(backupInterval)
     } catch (error) {
       console.error('Error starting auto-backup:', error)
     }
-  }, [])
+  }, [isInitialized])
   
   const [activeTab, setActiveTab] = useState('dashboard')
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
