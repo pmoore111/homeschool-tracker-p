@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useState, useEffect } from 'react'
 import { Toaster } from '@/components/ui/sonner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DashboardView } from '@/components/DashboardView'
@@ -10,6 +9,7 @@ import { TeacherJournalView } from '@/components/TeacherJournalView'
 import { Assignment, AttendanceRecord, StudentInfo, JournalEntry } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { GraduationCap } from '@phosphor-icons/react'
+import { getStoredData, saveStoredData, startAutoBackup } from '@/lib/storage'
 
 const STUDENT_INFO: StudentInfo = {
   name: 'Jordan Moore',
@@ -18,9 +18,34 @@ const STUDENT_INFO: StudentInfo = {
 }
 
 function App() {
-  const [assignments, setAssignments] = useKV<Assignment[]>('assignments', [])
-  const [attendance, setAttendance] = useKV<AttendanceRecord[]>('attendance', [])
-  const [journalEntries, setJournalEntries] = useKV<JournalEntry[]>('journal-entries', [])
+  const [assignments, setAssignments] = useState<Assignment[]>(() => 
+    getStoredData('assignments', [])
+  )
+  const [attendance, setAttendance] = useState<AttendanceRecord[]>(() => 
+    getStoredData('attendance', [])
+  )
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>(() => 
+    getStoredData('journal', [])
+  )
+
+  // Save to localStorage whenever data changes
+  useEffect(() => {
+    saveStoredData('assignments', assignments)
+  }, [assignments])
+
+  useEffect(() => {
+    saveStoredData('attendance', attendance)
+  }, [attendance])
+
+  useEffect(() => {
+    saveStoredData('journal', journalEntries)
+  }, [journalEntries])
+
+  // Start auto-backup on mount
+  useEffect(() => {
+    const backupInterval = startAutoBackup()
+    return () => clearInterval(backupInterval)
+  }, [])
   
   const [activeTab, setActiveTab] = useState('dashboard')
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
@@ -30,35 +55,34 @@ function App() {
       ...assignment,
       id: Date.now().toString()
     }
-    setAssignments((current) => [...(current || []), newAssignment])
+    setAssignments(current => [...current, newAssignment])
   }
 
-  const handleAddAssignments = (assignments: Omit<Assignment, 'id'>[]) => {
-    const newAssignments: Assignment[] = assignments.map((assignment, index) => ({
+  const handleAddAssignments = (newAssignments: Omit<Assignment, 'id'>[]) => {
+    const assignmentsWithIds: Assignment[] = newAssignments.map((assignment, index) => ({
       ...assignment,
       id: (Date.now() + index).toString()
     }))
-    setAssignments((current) => [...(current || []), ...newAssignments])
+    setAssignments(current => [...current, ...assignmentsWithIds])
   }
 
   const handleUpdateAssignment = (id: string, updatedAssignment: Omit<Assignment, 'id'>) => {
-    setAssignments((current) => 
-      (current || []).map(a => a.id === id ? { ...updatedAssignment, id } : a)
+    setAssignments(current => 
+      current.map(a => a.id === id ? { ...updatedAssignment, id } : a)
     )
   }
 
   const handleDeleteAssignment = (id: string) => {
-    setAssignments((current) => (current || []).filter(a => a.id !== id))
+    setAssignments(current => current.filter(a => a.id !== id))
   }
 
   const handleUpdateAttendance = (date: string, status: 'present' | 'absent' | 'excused') => {
-    setAttendance((current) => {
-      const currentArr = current || []
-      const existing = currentArr.find(a => a.date === date)
+    setAttendance(current => {
+      const existing = current.find(a => a.date === date)
       if (existing) {
-        return currentArr.map(a => a.date === date ? { ...a, status } : a)
+        return current.map(a => a.date === date ? { ...a, status } : a)
       } else {
-        return [...currentArr, { date, status }]
+        return [...current, { date, status }]
       }
     })
   }
@@ -77,17 +101,17 @@ function App() {
       ...entry,
       id: Date.now().toString()
     }
-    setJournalEntries((current) => [...(current || []), newEntry])
+    setJournalEntries(current => [...current, newEntry])
   }
 
   const handleUpdateJournalEntry = (id: string, entry: Omit<JournalEntry, 'id'>) => {
-    setJournalEntries((current) =>
-      (current || []).map(e => e.id === id ? { ...entry, id } : e)
+    setJournalEntries(current =>
+      current.map(e => e.id === id ? { ...entry, id } : e)
     )
   }
 
   const handleDeleteJournalEntry = (id: string) => {
-    setJournalEntries((current) => (current || []).filter(e => e.id !== id))
+    setJournalEntries(current => current.filter(e => e.id !== id))
   }
 
   const selectedSubject = selectedSubjectId 

@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { SubjectCard } from './SubjectCard'
 import { AIDailyEntry } from './AIDailyEntry'
+import { DataBackupCard } from './DataBackupCard'
 import { Assignment, AttendanceRecord, StudentInfo } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { calculateSubjectAverage, calculateGPA, calculateAttendanceRate } from '@/lib/helpers'
@@ -75,6 +76,8 @@ export function DashboardView({ assignments, attendance, studentInfo, onSelectSu
       </div>
 
       <AIDailyEntry onAddAssignments={onAddAssignments} />
+
+      <DataBackupCard />
 
       <div>
         <h3 className="text-xl font-semibold mb-4">Subjects</h3>
