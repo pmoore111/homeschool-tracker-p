@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -27,6 +27,25 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
     maxPoints: '100',
     date: getLocalDateString()
   })
+
+  const nextLessonPath = useMemo(() => {
+    for (let unitIdx = 0; unitIdx < curriculum.units.length; unitIdx++) {
+      const unit = curriculum.units[unitIdx]
+      for (let lessonIdx = 0; lessonIdx < unit.lessons.length; lessonIdx++) {
+        const lesson = unit.lessons[lessonIdx]
+        const hasIncompleteActivity = lesson.activities.some(
+          activity => !assignments.some(a => a.name === activity.title)
+        )
+        if (hasIncompleteActivity) {
+          return {
+            unit: `unit-${unitIdx}`,
+            lesson: `lesson-${unitIdx}-${lessonIdx}`
+          }
+        }
+      }
+    }
+    return null
+  }, [curriculum, assignments])
 
   const isActivityCompleted = (activityTitle: string) => {
     return assignments.some(a => a.name === activityTitle)
@@ -141,7 +160,11 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
           </div>
         </CardHeader>
         <CardContent>
-          <Accordion type="multiple" className="w-full">
+          <Accordion 
+            type="multiple" 
+            className="w-full"
+            defaultValue={nextLessonPath ? [nextLessonPath.unit] : []}
+          >
             {curriculum.units.map((unit, unitIdx) => (
               <AccordionItem key={unitIdx} value={`unit-${unitIdx}`}>
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
@@ -153,7 +176,11 @@ export function CurriculumView({ curriculum, subjectId, assignments, onAddAssign
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <Accordion type="multiple" className="w-full pl-4">
+                  <Accordion 
+                    type="multiple" 
+                    className="w-full pl-4"
+                    defaultValue={nextLessonPath && nextLessonPath.unit === `unit-${unitIdx}` ? [nextLessonPath.lesson] : []}
+                  >
                     {unit.lessons.map((lesson, lessonIdx) => (
                       <AccordionItem key={lessonIdx} value={`lesson-${unitIdx}-${lessonIdx}`}>
                         <AccordionTrigger className="font-medium hover:no-underline">
