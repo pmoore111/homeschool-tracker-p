@@ -22,8 +22,8 @@ function App() {
   const [assignments, setAssignments] = useKV<Assignment[]>('assignments', [])
   const [attendance, setAttendance] = useKV<AttendanceRecord[]>('attendance', [])
   const [journalEntries, setJournalEntries] = useKV<JournalEntry[]>('journal-entries', [])
+  const [hasEntered, setHasEntered] = useKV<boolean>('has-entered', false)
   
-  const [hasEntered, setHasEntered] = useState(false)
   const [activeTab, setActiveTab] = useState('dashboard')
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
 
