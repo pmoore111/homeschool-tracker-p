@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
 import { Calculator, Flask, BookBookmark, BookOpen, MapPin, Heart } from '@phosphor-icons/react'
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react'
 import { Subject, Assignment } from '@/lib/types'
@@ -20,11 +21,44 @@ const iconMap: Record<string, PhosphorIcon> = {
   Heart
 }
 
+function calculateCurriculumProgress(subject: Subject, assignments: Assignment[]): { completed: number; total: number; percentage: number } {
+  if (!subject.curriculum) {
+    return { completed: 0, total: 0, percentage: 0 }
+  }
+
+  let totalActivities = 0
+  const completedActivityTitles = new Set(assignments.map(a => a.name))
+
+  subject.curriculum.units.forEach(unit => {
+    unit.lessons.forEach(lesson => {
+      lesson.activities.forEach(activity => {
+        totalActivities++
+      })
+    })
+  })
+
+  let completedActivities = 0
+  subject.curriculum.units.forEach(unit => {
+    unit.lessons.forEach(lesson => {
+      lesson.activities.forEach(activity => {
+        if (completedActivityTitles.has(activity.title)) {
+          completedActivities++
+        }
+      })
+    })
+  })
+
+  const percentage = totalActivities > 0 ? Math.round((completedActivities / totalActivities) * 100) : 0
+
+  return { completed: completedActivities, total: totalActivities, percentage }
+}
+
 export function SubjectCard({ subject, assignments, onViewDetails }: SubjectCardProps) {
   const Icon = iconMap[subject.icon]
   const average = calculateSubjectAverage(assignments)
   const letterGrade = average > 0 ? getLetterGrade(average) : '--'
   const assignmentCount = assignments.length
+  const progress = calculateCurriculumProgress(subject, assignments)
 
   return (
     <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={onViewDetails}>
@@ -45,13 +79,27 @@ export function SubjectCard({ subject, assignments, onViewDetails }: SubjectCard
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">
-            {assignmentCount} {assignmentCount === 1 ? 'assignment' : 'assignments'}
-          </span>
-          <span className="font-medium">
-            {average > 0 ? `${average}%` : 'No grades'}
-          </span>
+        <div className="space-y-3">
+          {progress.total > 0 && (
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-muted-foreground">Course Progress</span>
+                <span className="font-medium">{progress.percentage}%</span>
+              </div>
+              <Progress value={progress.percentage} className="h-2" />
+              <div className="text-xs text-muted-foreground">
+                {progress.completed} of {progress.total} activities completed
+              </div>
+            </div>
+          )}
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">
+              {assignmentCount} {assignmentCount === 1 ? 'assignment' : 'assignments'}
+            </span>
+            <span className="font-medium">
+              {average > 0 ? `${average}%` : 'No grades'}
+            </span>
+          </div>
         </div>
       </CardContent>
     </Card>
