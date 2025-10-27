@@ -10,6 +10,9 @@ import { Assignment, AttendanceRecord, StudentInfo, JournalEntry } from '@/lib/t
 import { SUBJECTS } from '@/lib/types'
 import { GraduationCap } from '@phosphor-icons/react'
 import { getStoredData, saveStoredData, startAutoBackup } from '@/lib/storage'
+import { fetchRemotePayload, persistRemotePayload, supabaseEnabled } from '@/lib/remoteStorage'
+
+// Force rebuild to pick up Supabase env vars from GitHub secrets
 
 // Loading component
 function LoadingScreen() {
@@ -31,30 +34,60 @@ const STUDENT_INFO: StudentInfo = {
 }
 
 function App() {
+  const supabaseActive = supabaseEnabled()
   const [isLoading, setIsLoading] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
   const [assignments, setAssignments] = useState<Assignment[]>([])
   const [attendance, setAttendance] = useState<AttendanceRecord[]>([])
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
+  const [syncStatus, setSyncStatus] = useState<'disabled' | 'loading' | 'syncing' | 'synced' | 'error'>(
+    supabaseActive ? 'loading' : 'disabled'
+  )
+  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(null)
 
   // Initialize data on mount
   useEffect(() => {
     const initializeData = async () => {
       try {
-        console.log('Initializing My Living Word Academy data...')
-        
-        const loadedAssignments = getStoredData('assignments', [])
-        const loadedAttendance = getStoredData('attendance', [])
-        const loadedJournal = getStoredData('journal', [])
-        
-        setAssignments(loadedAssignments)
-        setAttendance(loadedAttendance)
-        setJournalEntries(loadedJournal)
-        
+    console.log('Initializing My Living Word Academy data...')
+
+    let nextAssignments: Assignment[] = getStoredData('assignments', [])
+    let nextAttendance: AttendanceRecord[] = getStoredData('attendance', [])
+    let nextJournal: JournalEntry[] = getStoredData('journal', [])
+
+        if (supabaseActive) {
+          setSyncStatus('loading')
+          try {
+            const remotePayload = await fetchRemotePayload()
+            if (remotePayload) {
+              nextAssignments = remotePayload.assignments ?? []
+              nextAttendance = remotePayload.attendance ?? []
+              nextJournal = remotePayload.journal ?? []
+              setLastSyncedAt(remotePayload.updated_at)
+              setSyncStatus('synced')
+              console.log('Loaded data from Supabase:', {
+                assignments: nextAssignments.length,
+                attendance: nextAttendance.length,
+                journal: nextJournal.length
+              })
+            } else {
+              setSyncStatus('synced')
+              console.log('No remote data found, using local cache')
+            }
+          } catch (error) {
+            console.error('Failed to load data from Supabase, falling back to local cache:', error)
+            setSyncStatus('error')
+          }
+        }
+
+        setAssignments(nextAssignments)
+        setAttendance(nextAttendance)
+        setJournalEntries(nextJournal)
+
         console.log('Data loaded successfully:', {
-          assignments: loadedAssignments.length,
-          attendance: loadedAttendance.length,
-          journal: loadedJournal.length
+          assignments: nextAssignments.length,
+          attendance: nextAttendance.length,
+          journal: nextJournal.length
         })
       } catch (error) {
         console.error('Error initializing data:', error)
@@ -69,7 +102,7 @@ function App() {
     }
 
     initializeData()
-  }, [])
+  }, [supabaseActive])
 
   // Save to localStorage whenever data changes
   useEffect(() => {
@@ -101,6 +134,34 @@ function App() {
       console.error('Error saving journal:', error)
     }
   }, [journalEntries, isInitialized])
+
+  useEffect(() => {
+    if (!isInitialized || !supabaseActive) {
+      return
+    }
+
+    const payload = {
+      assignments,
+      attendance,
+      journal: journalEntries,
+      updated_at: new Date().toISOString()
+    }
+
+    setSyncStatus('syncing')
+
+    const syncTimeout = setTimeout(async () => {
+      try {
+        await persistRemotePayload(payload)
+        setSyncStatus('synced')
+        setLastSyncedAt(payload.updated_at)
+      } catch (error) {
+        console.error('Error syncing data to Supabase:', error)
+        setSyncStatus('error')
+      }
+    }, 750)
+
+    return () => clearTimeout(syncTimeout)
+  }, [assignments, attendance, journalEntries, isInitialized, supabaseActive])
 
   // Start auto-backup on mount
   useEffect(() => {
@@ -205,6 +266,16 @@ function App() {
               <div>
                 <h1 className="text-2xl font-bold tracking-tight">My Living Word Academy</h1>
                 <p className="text-sm text-muted-foreground">{STUDENT_INFO.name} • {STUDENT_INFO.grade} • {STUDENT_INFO.schoolYear}</p>
+                {syncStatus !== 'disabled' && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {syncStatus === 'loading' && 'Connecting to cloud sync...'}
+                    {syncStatus === 'syncing' && 'Syncing with cloud...'}
+                    {syncStatus === 'synced' && (
+                      lastSyncedAt ? `Synced · ${new Date(lastSyncedAt).toLocaleString()}` : 'Synced'
+                    )}
+                    {syncStatus === 'error' && 'Cloud sync unavailable. Using local backup only.'}
+                  </p>
+                )}
               </div>
             </div>
           </div>
