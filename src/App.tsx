@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useState, useEffect } from 'react'
 import { Toaster } from '@/components/ui/sonner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DashboardView } from '@/components/DashboardView'
@@ -11,6 +10,23 @@ import { LandingPage } from '@/components/LandingPage'
 import { Assignment, AttendanceRecord, StudentInfo, JournalEntry } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { GraduationCap } from '@phosphor-icons/react'
+import { getStoredData, saveStoredData, startAutoBackup } from '@/lib/storage'
+import { fetchRemotePayload, persistRemotePayload, supabaseEnabled } from '@/lib/remoteStorage'
+
+// Redeploy with GitHub secrets configured
+
+// Loading component
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="text-center space-y-4">
+        <GraduationCap size={48} className="mx-auto text-primary animate-pulse" />
+        <h1 className="text-2xl font-bold">My Living Word Academy</h1>
+        <p className="text-muted-foreground">Loading your homeschool data...</p>
+      </div>
+    </div>
+  )
+}
 
 const STUDENT_INFO: StudentInfo = {
   name: 'Jordan Moore',
@@ -32,35 +48,34 @@ function App() {
       ...assignment,
       id: Date.now().toString()
     }
-    setAssignments((current) => [...(current || []), newAssignment])
+    setAssignments(current => [...current, newAssignment])
   }
 
-  const handleAddAssignments = (assignments: Omit<Assignment, 'id'>[]) => {
-    const newAssignments: Assignment[] = assignments.map((assignment, index) => ({
+  const handleAddAssignments = (newAssignments: Omit<Assignment, 'id'>[]) => {
+    const assignmentsWithIds: Assignment[] = newAssignments.map((assignment, index) => ({
       ...assignment,
       id: (Date.now() + index).toString()
     }))
-    setAssignments((current) => [...(current || []), ...newAssignments])
+    setAssignments(current => [...current, ...assignmentsWithIds])
   }
 
   const handleUpdateAssignment = (id: string, updatedAssignment: Omit<Assignment, 'id'>) => {
-    setAssignments((current) => 
-      (current || []).map(a => a.id === id ? { ...updatedAssignment, id } : a)
+    setAssignments(current => 
+      current.map(a => a.id === id ? { ...updatedAssignment, id } : a)
     )
   }
 
   const handleDeleteAssignment = (id: string) => {
-    setAssignments((current) => (current || []).filter(a => a.id !== id))
+    setAssignments(current => current.filter(a => a.id !== id))
   }
 
   const handleUpdateAttendance = (date: string, status: 'present' | 'absent' | 'excused') => {
-    setAttendance((current) => {
-      const currentArr = current || []
-      const existing = currentArr.find(a => a.date === date)
+    setAttendance(current => {
+      const existing = current.find(a => a.date === date)
       if (existing) {
-        return currentArr.map(a => a.date === date ? { ...a, status } : a)
+        return current.map(a => a.date === date ? { ...a, status } : a)
       } else {
-        return [...currentArr, { date, status }]
+        return [...current, { date, status }]
       }
     })
   }
@@ -79,17 +94,17 @@ function App() {
       ...entry,
       id: Date.now().toString()
     }
-    setJournalEntries((current) => [...(current || []), newEntry])
+    setJournalEntries(current => [...current, newEntry])
   }
 
   const handleUpdateJournalEntry = (id: string, entry: Omit<JournalEntry, 'id'>) => {
-    setJournalEntries((current) =>
-      (current || []).map(e => e.id === id ? { ...entry, id } : e)
+    setJournalEntries(current =>
+      current.map(e => e.id === id ? { ...entry, id } : e)
     )
   }
 
   const handleDeleteJournalEntry = (id: string) => {
-    setJournalEntries((current) => (current || []).filter(e => e.id !== id))
+    setJournalEntries(current => current.filter(e => e.id !== id))
   }
 
   const selectedSubject = selectedSubjectId 
@@ -114,8 +129,18 @@ function App() {
                 <GraduationCap size={28} weight="duotone" className="text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Homeschool Tracker</h1>
+                <h1 className="text-2xl font-bold tracking-tight">My Living Word Academy</h1>
                 <p className="text-sm text-muted-foreground">{STUDENT_INFO.name} • {STUDENT_INFO.grade} • {STUDENT_INFO.schoolYear}</p>
+                {syncStatus !== 'disabled' && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {syncStatus === 'loading' && 'Connecting to cloud sync...'}
+                    {syncStatus === 'syncing' && 'Syncing with cloud...'}
+                    {syncStatus === 'synced' && (
+                      lastSyncedAt ? `Synced · ${new Date(lastSyncedAt).toLocaleString()}` : 'Synced'
+                    )}
+                    {syncStatus === 'error' && 'Cloud sync unavailable. Using local backup only.'}
+                  </p>
+                )}
               </div>
             </div>
           </div>
