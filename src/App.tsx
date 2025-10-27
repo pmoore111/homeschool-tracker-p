@@ -12,7 +12,7 @@ import { GraduationCap } from '@phosphor-icons/react'
 import { getStoredData, saveStoredData, startAutoBackup } from '@/lib/storage'
 import { fetchRemotePayload, persistRemotePayload, supabaseEnabled } from '@/lib/remoteStorage'
 
-// Force rebuild to pick up Supabase env vars from GitHub secrets
+// Redeploy with GitHub secrets configured
 
 // Loading component
 function LoadingScreen() {
