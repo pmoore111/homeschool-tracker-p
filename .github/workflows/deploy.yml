@@ -10,6 +10,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     permissions:
       contents: read
       pages: write
@@ -29,12 +33,20 @@ jobs:
       run: npm ci
 
     - name: Build
+      env:
+        VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       run: npm run build
 
-    - name: Copy built files to root
+    - name: Deploy built files
       run: |
-        cp dist/index.html index.html
-        cp -r dist/assets assets/
+        # Remove old files
+        rm -f index.html
+        rm -rf assets/
+        # Copy all built files to root
+        cp -r dist/* .
+        # Ensure we have the correct structure
+        ls -la
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
