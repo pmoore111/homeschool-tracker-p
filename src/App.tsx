@@ -11,6 +11,19 @@ import { SUBJECTS } from '@/lib/types'
 import { GraduationCap } from '@phosphor-icons/react'
 import { getStoredData, saveStoredData, startAutoBackup } from '@/lib/storage'
 
+// Loading component
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="text-center space-y-4">
+        <GraduationCap size={48} className="mx-auto text-primary animate-pulse" />
+        <h1 className="text-2xl font-bold">My Living Word Academy</h1>
+        <p className="text-muted-foreground">Loading your homeschool data...</p>
+      </div>
+    </div>
+  )
+}
+
 const STUDENT_INFO: StudentInfo = {
   name: 'Jordan Moore',
   grade: '7th Grade',
@@ -18,33 +31,77 @@ const STUDENT_INFO: StudentInfo = {
 }
 
 function App() {
-  const [assignments, setAssignments] = useState<Assignment[]>(() => 
-    getStoredData('assignments', [])
-  )
-  const [attendance, setAttendance] = useState<AttendanceRecord[]>(() => 
-    getStoredData('attendance', [])
-  )
-  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>(() => 
-    getStoredData('journal', [])
-  )
+  const [isLoading, setIsLoading] = useState(true)
+  const [assignments, setAssignments] = useState<Assignment[]>([])
+  const [attendance, setAttendance] = useState<AttendanceRecord[]>([])
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
+
+  // Initialize data on mount
+  useEffect(() => {
+    const initializeData = async () => {
+      try {
+        console.log('Initializing My Living Word Academy data...')
+        
+        const loadedAssignments = getStoredData('assignments', [])
+        const loadedAttendance = getStoredData('attendance', [])
+        const loadedJournal = getStoredData('journal', [])
+        
+        setAssignments(loadedAssignments)
+        setAttendance(loadedAttendance)
+        setJournalEntries(loadedJournal)
+        
+        console.log('Data loaded successfully:', {
+          assignments: loadedAssignments.length,
+          attendance: loadedAttendance.length,
+          journal: loadedJournal.length
+        })
+      } catch (error) {
+        console.error('Error initializing data:', error)
+        // Initialize with empty arrays if there's an error
+        setAssignments([])
+        setAttendance([])
+        setJournalEntries([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    initializeData()
+  }, [])
 
   // Save to localStorage whenever data changes
   useEffect(() => {
-    saveStoredData('assignments', assignments)
+    try {
+      saveStoredData('assignments', assignments)
+    } catch (error) {
+      console.error('Error saving assignments:', error)
+    }
   }, [assignments])
 
   useEffect(() => {
-    saveStoredData('attendance', attendance)
+    try {
+      saveStoredData('attendance', attendance)
+    } catch (error) {
+      console.error('Error saving attendance:', error)
+    }
   }, [attendance])
 
   useEffect(() => {
-    saveStoredData('journal', journalEntries)
+    try {
+      saveStoredData('journal', journalEntries)
+    } catch (error) {
+      console.error('Error saving journal:', error)
+    }
   }, [journalEntries])
 
   // Start auto-backup on mount
   useEffect(() => {
-    const backupInterval = startAutoBackup()
-    return () => clearInterval(backupInterval)
+    try {
+      const backupInterval = startAutoBackup()
+      return () => clearInterval(backupInterval)
+    } catch (error) {
+      console.error('Error starting auto-backup:', error)
+    }
   }, [])
   
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -122,6 +179,10 @@ function App() {
     ? (assignments || []).filter(a => a.subjectId === selectedSubjectId)
     : []
 
+  if (isLoading) {
+    return <LoadingScreen />
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
@@ -132,7 +193,7 @@ function App() {
                 <GraduationCap size={28} weight="duotone" className="text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Homeschool Tracker</h1>
+                <h1 className="text-2xl font-bold tracking-tight">My Living Word Academy</h1>
                 <p className="text-sm text-muted-foreground">{STUDENT_INFO.name} • {STUDENT_INFO.grade} • {STUDENT_INFO.schoolYear}</p>
               </div>
             </div>

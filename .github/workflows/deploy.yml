@@ -35,10 +35,15 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Copy built files to root
+    - name: Deploy built files
       run: |
-        cp dist/index.html index.html
-        cp -r dist/assets assets/
+        # Remove old files
+        rm -f index.html
+        rm -rf assets/
+        # Copy all built files to root
+        cp -r dist/* .
+        # Ensure we have the correct structure
+        ls -la
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
