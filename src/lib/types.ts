@@ -48,6 +48,14 @@ export interface StudentInfo {
   schoolYear: string
 }
 
+export interface JournalEntry {
+  id: string
+  date: string
+  title: string
+  content: string
+  tags?: string[]
+}
+
 export const BIOLOGY_CURRICULUM: Curriculum = {
   course: "Middle School Biology",
   units: [

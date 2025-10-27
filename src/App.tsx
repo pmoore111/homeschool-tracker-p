@@ -6,7 +6,8 @@ import { DashboardView } from '@/components/DashboardView'
 import { SubjectDetail } from '@/components/SubjectDetail'
 import { AttendanceView } from '@/components/AttendanceView'
 import { ReportsView } from '@/components/ReportsView'
-import { Assignment, AttendanceRecord, StudentInfo } from '@/lib/types'
+import { TeacherJournalView } from '@/components/TeacherJournalView'
+import { Assignment, AttendanceRecord, StudentInfo, JournalEntry } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { GraduationCap } from '@phosphor-icons/react'
 
@@ -19,6 +20,7 @@ const STUDENT_INFO: StudentInfo = {
 function App() {
   const [assignments, setAssignments] = useKV<Assignment[]>('assignments', [])
   const [attendance, setAttendance] = useKV<AttendanceRecord[]>('attendance', [])
+  const [journalEntries, setJournalEntries] = useKV<JournalEntry[]>('journal-entries', [])
   
   const [activeTab, setActiveTab] = useState('dashboard')
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
@@ -70,6 +72,24 @@ function App() {
     setActiveTab('dashboard')
   }
 
+  const handleAddJournalEntry = (entry: Omit<JournalEntry, 'id'>) => {
+    const newEntry: JournalEntry = {
+      ...entry,
+      id: Date.now().toString()
+    }
+    setJournalEntries((current) => [...(current || []), newEntry])
+  }
+
+  const handleUpdateJournalEntry = (id: string, entry: Omit<JournalEntry, 'id'>) => {
+    setJournalEntries((current) =>
+      (current || []).map(e => e.id === id ? { ...entry, id } : e)
+    )
+  }
+
+  const handleDeleteJournalEntry = (id: string) => {
+    setJournalEntries((current) => (current || []).filter(e => e.id !== id))
+  }
+
   const selectedSubject = selectedSubjectId 
     ? SUBJECTS.find(s => s.id === selectedSubjectId) 
     : null
@@ -111,6 +131,7 @@ function App() {
             <TabsList className="mb-6">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="attendance">Attendance</TabsTrigger>
+              <TabsTrigger value="journal">Teacher Journal</TabsTrigger>
               <TabsTrigger value="reports">Reports</TabsTrigger>
             </TabsList>
             
@@ -128,6 +149,15 @@ function App() {
               <AttendanceView
                 attendance={attendance || []}
                 onUpdateAttendance={handleUpdateAttendance}
+              />
+            </TabsContent>
+
+            <TabsContent value="journal">
+              <TeacherJournalView
+                entries={journalEntries || []}
+                onAddEntry={handleAddJournalEntry}
+                onUpdateEntry={handleUpdateJournalEntry}
+                onDeleteEntry={handleDeleteJournalEntry}
               />
             </TabsContent>
             
