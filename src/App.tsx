@@ -7,6 +7,7 @@ import { SubjectDetail } from '@/components/SubjectDetail'
 import { AttendanceView } from '@/components/AttendanceView'
 import { ReportsView } from '@/components/ReportsView'
 import { TeacherJournalView } from '@/components/TeacherJournalView'
+import { LandingPage } from '@/components/LandingPage'
 import { Assignment, AttendanceRecord, StudentInfo, JournalEntry } from '@/lib/types'
 import { SUBJECTS } from '@/lib/types'
 import { GraduationCap } from '@phosphor-icons/react'
@@ -22,6 +23,7 @@ function App() {
   const [attendance, setAttendance] = useKV<AttendanceRecord[]>('attendance', [])
   const [journalEntries, setJournalEntries] = useKV<JournalEntry[]>('journal-entries', [])
   
+  const [hasEntered, setHasEntered] = useState(false)
   const [activeTab, setActiveTab] = useState('dashboard')
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null)
 
@@ -97,6 +99,10 @@ function App() {
   const subjectAssignments = selectedSubjectId
     ? (assignments || []).filter(a => a.subjectId === selectedSubjectId)
     : []
+
+  if (!hasEntered) {
+    return <LandingPage onEnter={() => setHasEntered(true)} />
+  }
 
   return (
     <div className="min-h-screen bg-background">
