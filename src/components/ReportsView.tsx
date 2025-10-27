@@ -129,7 +129,6 @@ export function ReportsView({ assignments, attendance, studentInfo }: ReportsVie
                 <TableHeader>
                   <TableRow>
                     <TableHead>Subject</TableHead>
-                    <TableHead className="text-center">Assignments</TableHead>
                     <TableHead className="text-right">Average</TableHead>
                     <TableHead className="text-right">Letter Grade</TableHead>
                   </TableRow>
@@ -138,7 +137,6 @@ export function ReportsView({ assignments, attendance, studentInfo }: ReportsVie
                   {subjectAverages.map((subject) => (
                     <TableRow key={subject.subject}>
                       <TableCell className="font-medium">{subject.subject}</TableCell>
-                      <TableCell className="text-center">{subject.assignmentCount}</TableCell>
                       <TableCell className="text-right">
                         {subject.average > 0 ? `${subject.average}%` : '--'}
                       </TableCell>
